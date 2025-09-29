@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CartCompanion - Smart Shopping Assistant with AI-powered recommendations and budget tracking">
     <title>CartCompanion - Smart Shopping Assistant</title>
     <style>
         * {
@@ -13,28 +14,28 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #f5f7fa;
             min-height: 100vh;
-            color: #333;
+            color: #2c3e50;
         }
 
         .container {
             max-width: 414px;
             margin: 0 auto;
-            background: white;
+            background: #ffffff;
             min-height: 100vh;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
             position: relative;
         }
 
         .top-header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background-color: #2c5aa0;
             color: white;
-            padding: 15px 20px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .welcome-text {
@@ -43,26 +44,26 @@
         }
 
         .welcome-subtext {
-            font-size: 12px;
+            font-size: 13px;
             opacity: 0.9;
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         .profile-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
+            width: 42px;
+            height: 42px;
+            background-color: rgba(255,255,255,0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background-color 0.3s ease;
             font-size: 20px;
         }
 
         .profile-icon:hover {
-            background: rgba(255,255,255,0.3);
+            background-color: rgba(255,255,255,0.3);
         }
 
         .main-content {
@@ -72,54 +73,63 @@
         }
 
         .budget-section {
-            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            background-color: #e74c3c;
             color: white;
             padding: 25px;
-            border-radius: 20px;
+            border-radius: 12px;
             margin-bottom: 25px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+        }
+
+        .budget-label {
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
         .budget-display {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
         .budget-remaining {
-            font-size: 16px;
-            opacity: 0.9;
+            font-size: 15px;
+            opacity: 0.95;
+            margin-top: 12px;
         }
 
         .budget-bar {
-            background: rgba(255,255,255,0.3);
-            height: 8px;
-            border-radius: 4px;
+            background-color: rgba(255,255,255,0.3);
+            height: 10px;
+            border-radius: 5px;
             margin: 15px 0;
             overflow: hidden;
         }
 
         .budget-progress {
-            background: white;
+            background-color: white;
             height: 100%;
             width: 0%;
-            border-radius: 4px;
+            border-radius: 5px;
             transition: width 0.5s ease;
         }
 
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 25px;
         }
 
         .btn {
-            padding: 18px;
+            padding: 16px;
             border: none;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: 10px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -127,53 +137,86 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #2c5aa0;
             color: white;
         }
 
+        .btn-primary:hover {
+            background-color: #234782;
+        }
+
         .btn-secondary {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            color: #333;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d5dbdb;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
         .shopping-list {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             overflow: hidden;
             margin-bottom: 25px;
+            border: 1px solid #e8eef2;
+        }
+
+        .category-header {
+            background-color: #34495e;
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-top: 2px solid #2c3e50;
+        }
+
+        .category-header {
+            background-color: #34495e;
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-top: 2px solid #2c3e50;
         }
 
         .list-header {
-            background: #f8f9fa;
-            padding: 18px 25px;
-            font-weight: 700;
-            font-size: 18px;
-            color: #333;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .list-item {
-            padding: 18px 25px;
-            border-bottom: 1px solid #f1f1f1;
+            background-color: #34495e;
+            color: white;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
+        }
+
+        .list-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+            background-color: white;
         }
 
         .list-item:hover {
-            background: #f8f9fa;
-            transform: translateX(5px);
+            background-color: #f8f9fa;
         }
 
         .list-item:last-child {
@@ -181,7 +224,7 @@
         }
 
         .list-item.completed {
-            opacity: 0.6;
+            opacity: 0.5;
             text-decoration: line-through;
         }
 
@@ -191,25 +234,26 @@
 
         .item-name {
             font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 4px;
-            color: #333;
+            font-size: 15px;
+            margin-bottom: 5px;
+            color: #2c3e50;
         }
 
         .item-category {
-            font-size: 12px;
-            color: #666;
+            font-size: 11px;
+            color: #7f8c8d;
             text-transform: uppercase;
-            background: #e3f2fd;
-            padding: 2px 8px;
-            border-radius: 10px;
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
             display: inline-block;
+            letter-spacing: 0.5px;
         }
 
         .item-price {
-            font-weight: bold;
-            color: #4facfe;
-            font-size: 18px;
+            font-weight: 700;
+            color: #2c5aa0;
+            font-size: 17px;
             margin-left: 15px;
         }
 
@@ -223,58 +267,59 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            background: #f0f0f0;
-            border-radius: 25px;
-            padding: 8px;
+            background-color: #ecf0f1;
+            border-radius: 20px;
+            padding: 6px;
         }
 
         .qty-btn {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             border: none;
             border-radius: 50%;
-            background: #4facfe;
+            background-color: #2c5aa0;
             color: white;
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .qty-btn:hover {
-            background: #3a8ae6;
-            transform: scale(1.1);
+            background-color: #234782;
+            transform: scale(1.05);
         }
 
         .quantity {
-            font-weight: bold;
+            font-weight: 600;
             min-width: 25px;
             text-align: center;
-            font-size: 16px;
+            font-size: 15px;
+            color: #2c3e50;
         }
 
         .checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
             cursor: pointer;
             position: relative;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .checkbox.checked {
-            background: #4facfe;
-            border-color: #4facfe;
+            background-color: #27ae60;
+            border-color: #27ae60;
         }
 
         .checkbox.checked::after {
             content: '✓';
             color: white;
             position: absolute;
-            top: -1px;
+            top: -2px;
             left: 3px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
         }
 
@@ -285,31 +330,32 @@
             transform: translateX(-50%);
             max-width: 414px;
             width: 100%;
-            background: white;
+            background-color: white;
             display: flex;
             align-items: center;
             justify-content: space-around;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 -3px 15px rgba(0,0,0,0.1);
+            border-top: 1px solid #ecf0f1;
         }
 
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             cursor: pointer;
             padding: 12px 20px;
-            border-radius: 15px;
+            border-radius: 10px;
             transition: all 0.3s ease;
             flex: 1;
         }
 
         .nav-item:hover {
-            background: #f0f0f0;
+            background-color: #f0f3f5;
         }
 
         .nav-item.active {
-            background: #e3f2fd;
+            background-color: #e8f1f8;
         }
 
         .nav-icon {
@@ -318,43 +364,43 @@
         }
 
         .nav-item.active .nav-icon {
-            color: #4facfe;
-            transform: scale(1.2);
+            color: #2c5aa0;
+            transform: scale(1.15);
         }
 
         .nav-label {
-            font-size: 12px;
-            color: #666;
-            font-weight: 500;
+            font-size: 11px;
+            color: #7f8c8d;
+            font-weight: 600;
         }
 
         .nav-item.active .nav-label {
-            color: #4facfe;
-            font-weight: 700;
+            color: #2c5aa0;
         }
 
         .scan-button {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            width: 90px;
+            height: 90px;
+            background-color: #27ae60;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 28px;
+            font-size: 32px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
             transition: all 0.3s ease;
             position: absolute;
             top: -35px;
             left: 50%;
             transform: translateX(-50%);
+            border: 4px solid white;
         }
 
         .scan-button:hover {
-            transform: translateX(-50%) scale(1.1);
-            box-shadow: 0 12px 35px rgba(79, 172, 254, 0.5);
+            transform: translateX(-50%) scale(1.08);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
         }
 
         .scan-button:active {
@@ -369,18 +415,19 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            background-color: rgba(0,0,0,0.6);
         }
 
         .modal-content {
             background-color: white;
             margin: 50px auto;
             padding: 30px;
-            border-radius: 20px;
+            border-radius: 15px;
             max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
             animation: slideIn 0.3s ease;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
         @keyframes slideIn {
@@ -396,22 +443,23 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #333;
+            color: #2c3e50;
+            font-size: 14px;
         }
 
         .form-input {
             width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 16px;
+            padding: 12px 15px;
+            border: 2px solid #dfe4ea;
+            border-radius: 8px;
+            font-size: 15px;
             transition: border-color 0.3s ease;
+            font-family: inherit;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+            border-color: #2c5aa0;
         }
 
         .scanner-view {
@@ -421,7 +469,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: black;
+            background-color: #000000;
             z-index: 1000;
             flex-direction: column;
             align-items: center;
@@ -429,31 +477,32 @@
         }
 
         .scanner-frame {
-            width: 320px;
-            height: 220px;
-            border: 3px solid #4facfe;
-            border-radius: 20px;
+            width: 300px;
+            height: 200px;
+            border: 3px solid #27ae60;
+            border-radius: 15px;
             position: relative;
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+            background-color: rgba(255,255,255,0.05);
+            box-shadow: 0 0 30px rgba(39, 174, 96, 0.3);
         }
 
         .scanner-line {
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #4facfe, transparent);
+            height: 2px;
+            background-color: #27ae60;
             position: absolute;
             top: 50%;
             animation: scan 2s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.8);
         }
 
         @keyframes scan {
             0%, 100% { 
-                transform: translateY(-110px); 
+                transform: translateY(-100px); 
                 opacity: 0;
             }
             50% { 
-                transform: translateY(110px); 
+                transform: translateY(100px); 
                 opacity: 1;
             }
         }
@@ -463,6 +512,7 @@
             text-align: center;
             margin-top: 40px;
             font-size: 18px;
+            font-weight: 600;
         }
 
         .scanner-subtext {
@@ -473,67 +523,69 @@
 
         .close-scanner {
             position: absolute;
-            top: 40px;
+            top: 30px;
             right: 30px;
-            background: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.2);
             color: white;
             border: none;
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .close-scanner:hover {
-            background: rgba(255,255,255,0.3);
+            background-color: rgba(255,255,255,0.3);
         }
 
         .recommendations {
-            margin-top: 30px;
-            background: #f8f9fa;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-top: 25px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e8eef2;
         }
 
         .recommendations h3 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 16px;
             font-weight: 700;
         }
 
         .recommendation-item {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 15px;
-            margin-bottom: 12px;
+            background-color: white;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border: 1px solid #ecf0f1;
         }
 
         .recommendation-item:hover {
-            background: #e3f2fd;
+            background-color: #e8f1f8;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .empty-state {
             text-align: center;
             padding: 50px 20px;
-            color: #666;
+            color: #7f8c8d;
         }
 
         .empty-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            opacity: 0.3;
+            font-size: 56px;
+            margin-bottom: 15px;
+            opacity: 0.4;
         }
 
         .view {
@@ -544,66 +596,63 @@
             display: block;
         }
 
-        .history-stats {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 20px;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
             margin-top: 15px;
         }
 
         .stat-item {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
+            background-color: white;
+            padding: 18px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #ecf0f1;
         }
 
         .stat-number {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            color: #4facfe;
+            color: #2c5aa0;
         }
 
         .stat-label {
             font-size: 12px;
-            color: #666;
+            color: #7f8c8d;
             margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .profile-section {
-            background: white;
-            border-radius: 20px;
+            background-color: white;
+            border-radius: 12px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             overflow: hidden;
+            border: 1px solid #e8eef2;
         }
 
         .profile-header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background-color: #2c5aa0;
             color: white;
-            padding: 25px;
+            padding: 30px 25px;
             text-align: center;
         }
 
         .profile-avatar {
             width: 80px;
             height: 80px;
-            background: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
             margin: 0 auto 15px auto;
+            border: 3px solid rgba(255,255,255,0.3);
         }
 
         .profile-name {
@@ -613,14 +662,175 @@
         }
 
         .profile-email {
-            font-size: 14px;
+            font-size: 13px;
             opacity: 0.9;
+        }
+
+        .product-detail-modal .modal-content {
+            max-width: 360px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .product-info-section {
+            margin-bottom: 20px;
+        }
+
+        .info-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .info-content {
+            font-size: 14px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .nutritional-facts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .nutrition-item {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .nutrition-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c5aa0;
+        }
+
+        .nutrition-label {
+            font-size: 11px;
+            color: #7f8c8d;
+            margin-top: 3px;
+        }
+
+        .chart-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            border: 1px solid #e8eef2;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 150px;
+            margin-top: 15px;
+        }
+
+        .bar {
+            flex: 1;
+            margin: 0 5px;
+            background-color: #2c5aa0;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .bar:hover {
+            background-color: #234782;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 11px;
+            color: #7f8c8d;
+        }
+
+        .dietary-badge {
+            display: inline-block;
+            background-color: #27ae60;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-section {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #e8eef2;
+        }
+
+        .filter-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            padding: 8px 14px;
+            background-color: white;
+            border: 2px solid #dfe4ea;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-chip:hover {
+            border-color: #2c5aa0;
+        }
+
+        .filter-chip.active {
+            background-color: #2c5aa0;
+            color: white;
+            border-color: #2c5aa0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Top Header -->
         <div class="top-header">
             <div>
                 <div class="welcome-text">Good Morning!</div>
@@ -629,16 +839,25 @@
             <div class="profile-icon" onclick="showView('profile')">👤</div>
         </div>
 
-        <!-- Home View -->
         <div id="home-view" class="view active">
             <div class="main-content">
                 <div class="budget-section">
-                    <h3>Today's Budget</h3>
-                    <div class="budget-display" id="budget-total">$0.00</div>
+                    <div class="budget-label">Today's Budget</div>
+                    <div class="budget-display">$<span id="budget-total">0.00</span></div>
                     <div class="budget-bar">
                         <div class="budget-progress" id="budget-progress"></div>
                     </div>
                     <div class="budget-remaining">Remaining: $<span id="budget-remaining">100.00</span></div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-title">Dietary Filters</div>
+                    <div class="filter-options">
+                        <div class="filter-chip" onclick="toggleFilter(this, 'gluten-free')">Gluten-Free</div>
+                        <div class="filter-chip" onclick="toggleFilter(this, 'vegan')">Vegan</div>
+                        <div class="filter-chip" onclick="toggleFilter(this, 'organic')">Organic</div>
+                        <div class="filter-chip" onclick="toggleFilter(this, 'low-sodium')">Low Sodium</div>
+                    </div>
                 </div>
 
                 <div class="action-buttons">
@@ -652,60 +871,90 @@
 
                 <div class="shopping-list">
                     <div class="list-header">
-                        Shopping List (<span id="item-count">0</span> items)
+                        <span>Shopping List</span>
+                        <span><span id="item-count">0</span> items</span>
                     </div>
                     <div id="shopping-items">
                         <div class="empty-state">
                             <div class="empty-icon">🛒</div>
                             <p>Your shopping list is empty</p>
-                            <p style="font-size: 14px; margin-top: 10px;">Add items by scanning barcodes or manually entering them</p>
+                            <p style="font-size: 13px; margin-top: 8px;">Scan barcodes or add items manually</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="recommendations">
-                    <h3>💡 Smart Suggestions</h3>
-                    <div class="recommendation-item" onclick="addRecommendedItem('Organic Milk 1 Gallon', 'Dairy', 4.99)">
-                        <span>🥛 Organic Milk - Based on your history</span>
-                        <span style="color: #4facfe; font-weight: bold;">$4.99</span>
+                    <h3>💡 AI-Powered Recommendations</h3>
+                    <div class="recommendation-item" onclick="showProductDetails('Organic Milk 1 Gallon', 'Dairy', 4.99)">
+                        <span>🥛 Organic Milk - Based on purchase history</span>
+                        <span style="color: #2c5aa0; font-weight: bold;">$4.99</span>
                     </div>
-                    <div class="recommendation-item" onclick="addRecommendedItem('Whole Wheat Bread', 'Bakery', 2.79)">
-                        <span>🍞 Whole Wheat Bread - Frequently bought</span>
-                        <span style="color: #4facfe; font-weight: bold;">$2.79</span>
+                    <div class="recommendation-item" onclick="showProductDetails('Whole Wheat Bread', 'Bakery', 2.79)">
+                        <span>🍞 Whole Wheat Bread - Frequently bought together</span>
+                        <span style="color: #2c5aa0; font-weight: bold;">$2.79</span>
                     </div>
-                    <div class="recommendation-item" onclick="addRecommendedItem('Organic Bananas', 'Produce', 1.99)">
-                        <span>🍌 Organic Bananas - Popular choice</span>
-                        <span style="color: #4facfe; font-weight: bold;">$1.99</span>
+                    <div class="recommendation-item" onclick="showProductDetails('Organic Bananas', 'Produce', 1.99)">
+                        <span>🍌 Organic Bananas - Popular this week</span>
+                        <span style="color: #2c5aa0; font-weight: bold;">$1.99</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- History View -->
         <div id="history-view" class="view">
             <div class="main-content">
-                <h2 style="margin-bottom: 25px; color: #333; font-size: 24px;">📊 Purchase History</h2>
+                <h2 style="margin-bottom: 20px; color: #2c3e50; font-size: 22px;">📊 Purchase History & Analytics</h2>
                 
+                <div class="chart-container">
+                    <div class="chart-title">Weekly Spending Trend</div>
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 60%;">
+                            <div class="bar-label">Mon</div>
+                        </div>
+                        <div class="bar" style="height: 45%;">
+                            <div class="bar-label">Tue</div>
+                        </div>
+                        <div class="bar" style="height: 80%;">
+                            <div class="bar-label">Wed</div>
+                        </div>
+                        <div class="bar" style="height: 35%;">
+                            <div class="bar-label">Thu</div>
+                        </div>
+                        <div class="bar" style="height: 90%;">
+                            <div class="bar-label">Fri</div>
+                        </div>
+                        <div class="bar" style="height: 70%;">
+                            <div class="bar-label">Sat</div>
+                        </div>
+                        <div class="bar" style="height: 55%;">
+                            <div class="bar-label">Sun</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="shopping-list">
-                    <div class="list-header">Recent Shopping Trips</div>
+                    <div class="list-header">
+                        <span>Recent Trips</span>
+                        <span>14 trips</span>
+                    </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">Walmart Supercenter</div>
-                            <div class="item-category" style="background: #e8f5e8;">TODAY • 2:30 PM</div>
+                            <div class="item-category">TODAY • 2:30 PM</div>
                         </div>
                         <div class="item-price">$89.43</div>
                     </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">Target Store</div>
-                            <div class="item-category" style="background: #fff3cd;">YESTERDAY • 4:15 PM</div>
+                            <div class="item-category">YESTERDAY • 4:15 PM</div>
                         </div>
                         <div class="item-price">$67.21</div>
                     </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">Kroger Marketplace</div>
-                            <div class="item-category" style="background: #f8d7da;">3 DAYS AGO • 6:45 PM</div>
+                            <div class="item-category">3 DAYS AGO • 6:45 PM</div>
                         </div>
                         <div class="item-price">$102.15</div>
                     </div>
@@ -718,33 +967,33 @@
                     </div>
                 </div>
 
-                <div class="history-stats">
-                    <h3 style="margin-bottom: 15px; color: #333;">📈 This Month Statistics</h3>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span>Total Spent:</span>
-                        <strong style="color: #4facfe;">$1,247.83</strong>
+                <div class="chart-container">
+                    <div class="chart-title">📈 Monthly Statistics</div>
+                    <div style="display: flex; justify-content: space-between; margin: 12px 0; padding-bottom: 12px; border-bottom: 1px solid #ecf0f1;">
+                        <span style="color: #7f8c8d; font-size: 14px;">Total Spent</span>
+                        <strong style="color: #2c5aa0; font-size: 16px;">$1,247.83</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span>Average per Trip:</span>
-                        <strong style="color: #4facfe;">$89.13</strong>
+                    <div style="display: flex; justify-content: space-between; margin: 12px 0; padding-bottom: 12px; border-bottom: 1px solid #ecf0f1;">
+                        <span style="color: #7f8c8d; font-size: 14px;">Average per Trip</span>
+                        <strong style="color: #2c5aa0; font-size: 16px;">$89.13</strong>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                        <span>Shopping Trips:</span>
-                        <strong style="color: #4facfe;">14 trips</strong>
+                    <div style="display: flex; justify-content: space-between; margin: 12px 0;">
+                        <span style="color: #7f8c8d; font-size: 14px;">Shopping Frequency</span>
+                        <strong style="color: #2c5aa0; font-size: 16px;">3.5 trips/week</strong>
                     </div>
                     
-                    <div class="stats-grid">
+                    <div class="stats-grid" style="margin-top: 20px;">
                         <div class="stat-item">
                             <div class="stat-number">$23.40</div>
                             <div class="stat-label">Money Saved</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">3.5</div>
-                            <div class="stat-label">Trips/Week</div>
-                        </div>
-                        <div class="stat-item">
                             <div class="stat-number">12</div>
                             <div class="stat-label">Avg Items</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">Dairy</div>
+                            <div class="stat-label">Top Category</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-number">Walmart</div>
@@ -752,10 +1001,31 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="chart-container">
+                    <div class="chart-title">Most Purchased Items</div>
+                    <div style="margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #ecf0f1;">
+                            <span style="font-size: 14px; color: #2c3e50;">🥛 Organic Milk</span>
+                            <span style="font-size: 13px; color: #7f8c8d;">28 times</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #ecf0f1;">
+                            <span style="font-size: 14px; color: #2c3e50;">🍞 Whole Wheat Bread</span>
+                            <span style="font-size: 13px; color: #7f8c8d;">24 times</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #ecf0f1;">
+                            <span style="font-size: 14px; color: #2c3e50;">🍌 Bananas</span>
+                            <span style="font-size: 13px; color: #7f8c8d;">22 times</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+                            <span style="font-size: 14px; color: #2c3e50;">🥚 Eggs (Dozen)</span>
+                            <span style="font-size: 13px; color: #7f8c8d;">20 times</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Profile View -->
         <div id="profile-view" class="view">
             <div class="main-content">
                 <div class="profile-section">
@@ -767,7 +1037,9 @@
                 </div>
                 
                 <div class="shopping-list">
-                    <div class="list-header">Shopping Preferences</div>
+                    <div class="list-header">
+                        <span>Shopping Preferences</span>
+                    </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">Default Budget</div>
@@ -777,54 +1049,72 @@
                     </div>
                     <div class="list-item">
                         <div class="item-info">
-                            <div class="item-name">Dietary Preferences</div>
-                            <div class="item-category">RESTRICTIONS</div>
+                            <div class="item-name">Dietary Restrictions</div>
+                            <div class="item-category">HEALTH PREFERENCES</div>
                         </div>
-                        <div style="color: #666;">Gluten-free</div>
+                        <div style="color: #2c3e50;">
+                            <span class="dietary-badge">Gluten-Free</span>
+                        </div>
                     </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">Favorite Stores</div>
                             <div class="item-category">PREFERRED LOCATIONS</div>
                         </div>
-                        <div style="color: #666;">Walmart</div>
+                        <div style="color: #7f8c8d; font-size: 14px;">Walmart, Target</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-name">Shopping Reminder</div>
+                            <div class="item-category">FREQUENCY</div>
+                        </div>
+                        <div style="color: #7f8c8d; font-size: 14px;">Weekly</div>
                     </div>
                 </div>
 
                 <div class="shopping-list">
-                    <div class="list-header">App Settings</div>
+                    <div class="list-header">
+                        <span>App Settings</span>
+                    </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">Push Notifications</div>
                             <div class="item-category">ALERTS & REMINDERS</div>
                         </div>
-                        <div style="color: #4facfe; font-weight: bold;">ON</div>
+                        <div style="color: #27ae60; font-weight: bold;">ON</div>
                     </div>
                     <div class="list-item">
                         <div class="item-info">
-                            <div class="item-name">Currency</div>
-                            <div class="item-category">DISPLAY FORMAT</div>
+                            <div class="item-name">Currency Display</div>
+                            <div class="item-category">FORMAT</div>
                         </div>
-                        <div style="color: #666;">USD ($)</div>
+                        <div style="color: #7f8c8d; font-size: 14px;">USD ($)</div>
                     </div>
                     <div class="list-item">
                         <div class="item-info">
-                            <div class="item-name">Theme</div>
-                            <div class="item-category">APPEARANCE</div>
+                            <div class="item-name">Measurement Units</div>
+                            <div class="item-category">DISPLAY PREFERENCE</div>
                         </div>
-                        <div style="color: #666;">Light Mode</div>
+                        <div style="color: #7f8c8d; font-size: 14px;">Imperial</div>
                     </div>
                     <div class="list-item">
                         <div class="item-info">
                             <div class="item-name">AI Suggestions</div>
                             <div class="item-category">SMART RECOMMENDATIONS</div>
                         </div>
-                        <div style="color: #4facfe; font-weight: bold;">ON</div>
+                        <div style="color: #27ae60; font-weight: bold;">ON</div>
+                    </div>
+                    <div class="list-item">
+                        <div class="item-info">
+                            <div class="item-name">Offline Mode</div>
+                            <div class="item-category">DATA STORAGE</div>
+                        </div>
+                        <div style="color: #27ae60; font-weight: bold;">ENABLED</div>
                     </div>
                 </div>
 
-                <div class="history-stats">
-                    <h3 style="margin-bottom: 15px; color: #333;">📊 Account Overview</h3>
+                <div class="chart-container">
+                    <div class="chart-title">📊 Account Overview</div>
                     <div class="stats-grid">
                         <div class="stat-item">
                             <div class="stat-number">47</div>
@@ -839,15 +1129,14 @@
                             <div class="stat-label">Items Scanned</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">8.7</div>
-                            <div class="stat-label">App Rating</div>
+                            <div class="stat-number">3.2</div>
+                            <div class="stat-label">Months Active</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Bottom Navigation -->
         <div class="bottom-nav">
             <div class="nav-item active" onclick="showView('home')">
                 <div class="nav-icon">🏠</div>
@@ -858,11 +1147,10 @@
             
             <div class="nav-item" onclick="showView('history')">
                 <div class="nav-icon">📊</div>
-                <div class="nav-label">History</div>
+                <div class="nav-label">Analytics</div>
             </div>
         </div>
 
-        <!-- Scanner Modal -->
         <div class="scanner-view" id="scanner-view">
             <button class="close-scanner" onclick="closeScanner()">✕</button>
             <div class="scanner-frame">
@@ -870,20 +1158,20 @@
             </div>
             <div class="scanner-text">
                 <p>Point camera at barcode</p>
-                <div class="scanner-subtext">Align barcode within the frame for scanning</div>
+                <div class="scanner-subtext">Using Google ML Kit Barcode Scanning API</div>
+                <div class="scanner-subtext" style="margin-top: 5px;">Supports UPC-A, EAN-13, QR codes</div>
             </div>
         </div>
 
-        <!-- Add Item Modal -->
         <div class="modal" id="add-item-modal">
             <div class="modal-content">
-                <h3 style="margin-bottom: 25px; color: #333;">Add New Item</h3>
+                <h3 style="margin-bottom: 20px; color: #2c3e50; font-size: 20px; font-weight: 700;">Add New Item</h3>
                 <div class="form-group">
-                    <label class="form-label">Product Name</label>
+                    <label class="form-label" for="product-name">Product Name</label>
                     <input type="text" class="form-input" id="product-name" placeholder="e.g. Organic Apples">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Category</label>
+                    <label class="form-label" for="product-category">Category</label>
                     <select class="form-input" id="product-category">
                         <option value="Produce">Produce</option>
                         <option value="Dairy">Dairy</option>
@@ -892,12 +1180,13 @@
                         <option value="Beverages">Beverages</option>
                         <option value="Snacks">Snacks</option>
                         <option value="Bakery">Bakery</option>
+                        <option value="Frozen">Frozen</option>
                         <option value="Other">Other</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Price ($)</label>
-                    <input type="number" class="form-input" id="product-price" placeholder="0.00" step="0.01">
+                    <label class="form-label" for="product-price">Price ($)</label>
+                    <input type="number" class="form-input" id="product-price" placeholder="0.00" step="0.01" min="0">
                 </div>
                 <div style="display: flex; gap: 10px; margin-top: 25px;">
                     <button class="btn btn-secondary" onclick="closeAddItemModal()" style="flex: 1;">Cancel</button>
@@ -905,40 +1194,110 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal product-detail-modal" id="product-detail-modal">
+            <div class="modal-content">
+                <div class="product-image" id="product-icon">🥛</div>
+                <h3 style="margin-bottom: 10px; color: #2c3e50; font-size: 20px; font-weight: 700;" id="product-detail-name">Product Name</h3>
+                <div style="margin-bottom: 20px;">
+                    <span class="item-category" id="product-detail-category">CATEGORY</span>
+                    <span style="margin-left: 10px; color: #27ae60; font-weight: 700; font-size: 22px;" id="product-detail-price">$0.00</span>
+                </div>
+
+                <div class="product-info-section">
+                    <div class="info-title">Nutritional Facts (per serving)</div>
+                    <div class="nutritional-facts">
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">130</div>
+                            <div class="nutrition-label">Calories</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">8g</div>
+                            <div class="nutrition-label">Protein</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">5g</div>
+                            <div class="nutrition-label">Fat</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">12g</div>
+                            <div class="nutrition-label">Carbs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-info-section">
+                    <div class="info-title">Ingredients</div>
+                    <div class="info-content">Organic Grade A Milk, Vitamin D3</div>
+                </div>
+
+                <div class="product-info-section">
+                    <div class="info-title">Dietary Labels</div>
+                    <div>
+                        <span class="dietary-badge">Organic</span>
+                        <span class="dietary-badge" style="background-color: #3498db;">Gluten-Free</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 25px;">
+                    <button class="btn btn-secondary" onclick="closeProductDetails()" style="flex: 1;">Close</button>
+                    <button class="btn btn-primary" onclick="addFromDetails()" style="flex: 1;">Add to List</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // App State
-        let shoppingItems = [];
-        let currentBudget = 100.00;
-        let totalSpent = 0.00;
-
-        // Sample product database for barcode simulation
-        const productDatabase = {
-            '123456789012': { name: 'Coca Cola 12oz', category: 'Beverages', price: 1.99 },
-            '123456789013': { name: 'Lay\'s Classic Chips', category: 'Snacks', price: 3.49 },
-            '123456789014': { name: 'Wonder Bread', category: 'Bakery', price: 2.49 },
-            '123456789015': { name: 'Organic Milk 1 Gallon', category: 'Dairy', price: 4.99 },
-            '123456789016': { name: 'Ground Beef 85/15', category: 'Meat', price: 5.99 },
-            '123456789017': { name: 'Bananas Organic', category: 'Produce', price: 1.99 }
+        const appState = {
+            shoppingItems: [],
+            currentBudget: 100.00,
+            totalSpent: 0.00,
+            activeFilters: [],
+            currentProduct: null
         };
 
-        // Navigation functionality
+        const productDatabase = {
+            '123456789012': { name: 'Coca Cola 12oz', category: 'Beverages', price: 1.99, icon: '🥤', calories: 140, protein: '0g', fat: '0g', carbs: '39g', ingredients: 'Carbonated water, high fructose corn syrup, caramel color', dietary: ['Vegan'] },
+            '123456789013': { name: 'Orange Juice 64oz', category: 'Beverages', price: 3.99, icon: '🍊', calories: 110, protein: '2g', fat: '0g', carbs: '26g', ingredients: 'Pasteurized orange juice', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789014': { name: 'Green Tea Box', category: 'Beverages', price: 4.49, icon: '🍵', calories: 0, protein: '0g', fat: '0g', carbs: '0g', ingredients: 'Green tea leaves', dietary: ['Organic', 'Vegan', 'Gluten-Free'] },
+            '123456789015': { name: 'Lays Classic Chips', category: 'Snacks', price: 3.49, icon: '🥔', calories: 160, protein: '2g', fat: '10g', carbs: '15g', ingredients: 'Potatoes, vegetable oil, salt', dietary: ['Gluten-Free', 'Vegan'] },
+            '123456789016': { name: 'Oreo Cookies', category: 'Snacks', price: 4.29, icon: '🍪', calories: 160, protein: '2g', fat: '7g', carbs: '25g', ingredients: 'Sugar, flour, palm oil, cocoa', dietary: ['Vegan'] },
+            '123456789017': { name: 'Almonds Roasted', category: 'Snacks', price: 6.99, icon: '🥜', calories: 170, protein: '6g', fat: '15g', carbs: '6g', ingredients: 'Almonds, salt', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789018': { name: 'Wonder Bread', category: 'Bakery', price: 2.49, icon: '🍞', calories: 70, protein: '3g', fat: '1g', carbs: '13g', ingredients: 'Enriched wheat flour, water, sugar, yeast', dietary: [] },
+            '123456789019': { name: 'Bagels Plain 6pk', category: 'Bakery', price: 3.79, icon: '🥯', calories: 280, protein: '10g', fat: '2g', carbs: '55g', ingredients: 'Wheat flour, water, yeast, salt', dietary: ['Vegan'] },
+            '123456789020': { name: 'Croissants 4pk', category: 'Bakery', price: 4.99, icon: '🥐', calories: 230, protein: '5g', fat: '12g', carbs: '26g', ingredients: 'Wheat flour, butter, yeast, milk', dietary: [] },
+            '123456789021': { name: 'Organic Milk 1 Gallon', category: 'Dairy', price: 4.99, icon: '🥛', calories: 130, protein: '8g', fat: '5g', carbs: '12g', ingredients: 'Organic Grade A Milk, Vitamin D3', dietary: ['Organic', 'Gluten-Free'] },
+            '123456789022': { name: 'Cheddar Cheese Block', category: 'Dairy', price: 5.49, icon: '🧀', calories: 110, protein: '7g', fat: '9g', carbs: '1g', ingredients: 'Pasteurized milk, cheese cultures, salt', dietary: ['Gluten-Free'] },
+            '123456789023': { name: 'Greek Yogurt Plain', category: 'Dairy', price: 4.79, icon: '🥛', calories: 100, protein: '17g', fat: '0g', carbs: '7g', ingredients: 'Grade A milk, live cultures', dietary: ['Gluten-Free'] },
+            '123456789024': { name: 'Eggs Large Dozen', category: 'Dairy', price: 3.99, icon: '🥚', calories: 70, protein: '6g', fat: '5g', carbs: '0g', ingredients: 'Grade A eggs', dietary: ['Gluten-Free'] },
+            '123456789025': { name: 'Ground Beef 85/15', category: 'Meat', price: 5.99, icon: '🥩', calories: 215, protein: '22g', fat: '15g', carbs: '0g', ingredients: 'Ground beef', dietary: ['Gluten-Free'] },
+            '123456789026': { name: 'Chicken Breast', category: 'Meat', price: 7.99, icon: '🍗', calories: 165, protein: '31g', fat: '3.6g', carbs: '0g', ingredients: 'Chicken breast', dietary: ['Gluten-Free'] },
+            '123456789027': { name: 'Salmon Fillet', category: 'Meat', price: 12.99, icon: '🐟', calories: 206, protein: '22g', fat: '13g', carbs: '0g', ingredients: 'Atlantic salmon', dietary: ['Gluten-Free'] },
+            '123456789028': { name: 'Organic Bananas', category: 'Produce', price: 1.99, icon: '🍌', calories: 105, protein: '1g', fat: '0g', carbs: '27g', ingredients: 'Organic bananas', dietary: ['Organic', 'Vegan', 'Gluten-Free'] },
+            '123456789029': { name: 'Red Apples 3lb', category: 'Produce', price: 3.99, icon: '🍎', calories: 95, protein: '0g', fat: '0g', carbs: '25g', ingredients: 'Fresh red apples', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789030': { name: 'Baby Spinach', category: 'Produce', price: 2.99, icon: '🥬', calories: 7, protein: '1g', fat: '0g', carbs: '1g', ingredients: 'Organic baby spinach', dietary: ['Organic', 'Vegan', 'Gluten-Free'] },
+            '123456789031': { name: 'Carrots 2lb Bag', category: 'Produce', price: 1.79, icon: '🥕', calories: 41, protein: '1g', fat: '0g', carbs: '10g', ingredients: 'Fresh carrots', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789032': { name: 'Tomatoes On Vine', category: 'Produce', price: 2.49, icon: '🍅', calories: 22, protein: '1g', fat: '0g', carbs: '5g', ingredients: 'Fresh tomatoes', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789033': { name: 'Pasta Spaghetti', category: 'Pantry', price: 1.99, icon: '🍝', calories: 200, protein: '7g', fat: '1g', carbs: '42g', ingredients: 'Durum wheat semolina', dietary: ['Vegan'] },
+            '123456789034': { name: 'Rice White 5lb', category: 'Pantry', price: 4.99, icon: '🍚', calories: 205, protein: '4g', fat: '0g', carbs: '45g', ingredients: 'Enriched long grain rice', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789035': { name: 'Black Beans Can', category: 'Pantry', price: 1.29, icon: '🫘', calories: 110, protein: '7g', fat: '0g', carbs: '20g', ingredients: 'Black beans, water, salt', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789036': { name: 'Olive Oil 16oz', category: 'Pantry', price: 7.99, icon: '🫒', calories: 120, protein: '0g', fat: '14g', carbs: '0g', ingredients: 'Extra virgin olive oil', dietary: ['Vegan', 'Gluten-Free'] },
+            '123456789037': { name: 'Ice Cream Vanilla', category: 'Frozen', price: 4.99, icon: '🍦', calories: 140, protein: '2g', fat: '7g', carbs: '17g', ingredients: 'Milk, cream, sugar, vanilla', dietary: ['Gluten-Free'] },
+            '123456789038': { name: 'Frozen Pizza', category: 'Frozen', price: 5.99, icon: '🍕', calories: 320, protein: '13g', fat: '12g', carbs: '41g', ingredients: 'Wheat flour, cheese, tomato sauce', dietary: [] },
+            '123456789039': { name: 'Mixed Vegetables', category: 'Frozen', price: 2.99, icon: '🥦', calories: 50, protein: '2g', fat: '0g', carbs: '10g', ingredients: 'Broccoli, carrots, corn, peas', dietary: ['Vegan', 'Gluten-Free'] }
+        };
+
         function showView(viewName) {
-            // Hide all views
             document.querySelectorAll('.view').forEach(view => {
                 view.classList.remove('active');
             });
             
-            // Show selected view
             document.getElementById(viewName + '-view').classList.add('active');
             
-            // Update navigation active state
             document.querySelectorAll('.nav-item').forEach(nav => {
                 nav.classList.remove('active');
             });
             
-            // Find and activate the corresponding nav item
             const navItems = document.querySelectorAll('.nav-item');
             if (viewName === 'home') {
                 navItems[0].classList.add('active');
@@ -946,7 +1305,6 @@
                 navItems[1].classList.add('active');
             }
 
-            // Update welcome text based on time and view
             updateWelcomeText(viewName);
         }
 
@@ -963,7 +1321,7 @@
             }
 
             if (viewName === 'history') {
-                greeting = 'Your Shopping History';
+                greeting = 'Shopping Analytics';
                 subtitle = 'Track your spending patterns';
             } else if (viewName === 'profile') {
                 greeting = 'Profile & Settings';
@@ -976,19 +1334,16 @@
             `;
         }
 
-        // Scanner functionality
         function openScanner() {
             document.getElementById('scanner-view').style.display = 'flex';
             
-            // Simulate barcode scan after 3 seconds
             setTimeout(() => {
                 const randomBarcodes = Object.keys(productDatabase);
                 const randomBarcode = randomBarcodes[Math.floor(Math.random() * randomBarcodes.length)];
                 const product = productDatabase[randomBarcode];
                 
                 closeScanner();
-                addScannedItem(product.name, product.category, product.price);
-                showSuccessToast(`✅ Added ${product.name} to your list!`);
+                showProductDetails(product.name, product.category, product.price);
             }, 3000);
         }
 
@@ -996,25 +1351,52 @@
             document.getElementById('scanner-view').style.display = 'none';
         }
 
-        // Item management functions
-        function addScannedItem(name, category, price) {
-            addItemToList(name, category, price);
+        function showProductDetails(name, category, price) {
+            const product = Object.values(productDatabase).find(p => p.name === name) || {
+                icon: '📦',
+                calories: 100,
+                protein: '2g',
+                fat: '3g',
+                carbs: '15g',
+                ingredients: 'Various ingredients',
+                dietary: []
+            };
+
+            appState.currentProduct = { name, category, price, ...product };
+
+            document.getElementById('product-icon').textContent = product.icon;
+            document.getElementById('product-detail-name').textContent = name;
+            document.getElementById('product-detail-category').textContent = category.toUpperCase();
+            document.getElementById('product-detail-price').textContent = `${price.toFixed(2)}`;
+
+            document.getElementById('product-detail-modal').style.display = 'block';
         }
 
-        function addRecommendedItem(name, category, price) {
-            addItemToList(name, category, price);
-            showSuccessToast(`✅ Added ${name} to your list!`);
+        function closeProductDetails() {
+            document.getElementById('product-detail-modal').style.display = 'none';
+            appState.currentProduct = null;
+        }
+
+        function addFromDetails() {
+            if (appState.currentProduct) {
+                addItemToList(
+                    appState.currentProduct.name,
+                    appState.currentProduct.category,
+                    appState.currentProduct.price
+                );
+                closeProductDetails();
+                showSuccessToast(`Added ${appState.currentProduct.name} to your list!`);
+            }
         }
 
         function addItemToList(name, category, price) {
-            // Check if item already exists
-            const existingItem = shoppingItems.find(item => 
+            const existingItem = appState.shoppingItems.find(item => 
                 item.name.toLowerCase() === name.toLowerCase()
             );
 
             if (existingItem) {
                 existingItem.quantity += 1;
-                showSuccessToast(`📈 Increased ${name} quantity to ${existingItem.quantity}`);
+                showSuccessToast(`Increased ${name} quantity to ${existingItem.quantity}`);
             } else {
                 const newItem = {
                     id: Date.now(),
@@ -1024,14 +1406,14 @@
                     quantity: 1,
                     completed: false
                 };
-                shoppingItems.push(newItem);
+                appState.shoppingItems.push(newItem);
             }
 
             updateDisplay();
         }
 
         function updateQuantity(id, delta) {
-            const item = shoppingItems.find(item => item.id === id);
+            const item = appState.shoppingItems.find(item => item.id === id);
             if (item) {
                 const newQuantity = item.quantity + delta;
                 if (newQuantity <= 0) {
@@ -1044,45 +1426,43 @@
         }
 
         function toggleComplete(id) {
-            const item = shoppingItems.find(item => item.id === id);
+            const item = appState.shoppingItems.find(item => item.id === id);
             if (item) {
                 item.completed = !item.completed;
                 updateDisplay();
                 
                 if (item.completed) {
-                    showSuccessToast(`✅ Marked ${item.name} as completed!`);
+                    showSuccessToast(`Marked ${item.name} as completed`);
                 }
             }
         }
 
         function removeItem(id) {
-            const item = shoppingItems.find(item => item.id === id);
+            const item = appState.shoppingItems.find(item => item.id === id);
             if (item) {
-                shoppingItems = shoppingItems.filter(item => item.id !== id);
+                appState.shoppingItems = appState.shoppingItems.filter(item => item.id !== id);
                 updateDisplay();
-                showSuccessToast(`🗑️ Removed ${item.name} from list`);
+                showSuccessToast(`Removed ${item.name} from list`);
             }
         }
 
         function clearCompleted() {
-            const completedCount = shoppingItems.filter(item => item.completed).length;
+            const completedCount = appState.shoppingItems.filter(item => item.completed).length;
             if (completedCount > 0) {
-                shoppingItems = shoppingItems.filter(item => !item.completed);
+                appState.shoppingItems = appState.shoppingItems.filter(item => !item.completed);
                 updateDisplay();
-                showSuccessToast(`🗑️ Removed ${completedCount} completed items`);
+                showSuccessToast(`Removed ${completedCount} completed items`);
             } else {
-                showSuccessToast(`ℹ️ No completed items to clear`);
+                showSuccessToast('No completed items to clear');
             }
         }
 
-        // Modal functions
         function openAddItemModal() {
             document.getElementById('add-item-modal').style.display = 'block';
         }
 
         function closeAddItemModal() {
             document.getElementById('add-item-modal').style.display = 'none';
-            // Clear form
             document.getElementById('product-name').value = '';
             document.getElementById('product-price').value = '';
             document.getElementById('product-category').value = 'Produce';
@@ -1093,16 +1473,30 @@
             const price = parseFloat(document.getElementById('product-price').value) || 0;
             const category = document.getElementById('product-category').value;
 
-            if (name) {
+            if (name && price > 0) {
                 addItemToList(name, category, price);
                 closeAddItemModal();
-                showSuccessToast(`✅ Added ${name} to your list!`);
+                showSuccessToast(`Added ${name} to your list`);
             } else {
-                showErrorToast('Please enter a product name');
+                showErrorToast('Please enter a valid product name and price');
             }
         }
 
-        // Display update functions
+        function toggleFilter(element, filterName) {
+            element.classList.toggle('active');
+            
+            const index = appState.activeFilters.indexOf(filterName);
+            if (index > -1) {
+                appState.activeFilters.splice(index, 1);
+            } else {
+                appState.activeFilters.push(filterName);
+            }
+
+            if (appState.activeFilters.length > 0) {
+                showSuccessToast(`Filtering by: ${appState.activeFilters.join(', ')}`);
+            }
+        }
+
         function updateDisplay() {
             updateShoppingList();
             updateBudgetDisplay();
@@ -1111,16 +1505,20 @@
         function updateShoppingList() {
             const container = document.getElementById('shopping-items');
             
-            if (shoppingItems.length === 0) {
+            if (appState.shoppingItems.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">🛒</div>
                         <p>Your shopping list is empty</p>
-                        <p style="font-size: 14px; margin-top: 10px;">Add items by scanning barcodes or manually entering them</p>
+                        <p style="font-size: 13px; margin-top: 8px;">Scan barcodes or add items manually</p>
                     </div>
                 `;
             } else {
-                container.innerHTML = shoppingItems.map(item => `
+                const sortedItems = [...appState.shoppingItems].sort((a, b) => 
+                    a.category.localeCompare(b.category)
+                );
+
+                container.innerHTML = sortedItems.map(item => `
                     <div class="list-item ${item.completed ? 'completed' : ''}">
                         <div class="item-info">
                             <div class="item-name">${item.name}</div>
@@ -1128,69 +1526,74 @@
                         </div>
                         <div class="item-actions">
                             <div class="quantity-control">
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)" aria-label="Decrease quantity">-</button>
                                 <span class="quantity">${item.quantity}</span>
-                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)" aria-label="Increase quantity">+</button>
                             </div>
                             <div class="item-price">${(item.price * item.quantity).toFixed(2)}</div>
-                            <div class="checkbox ${item.completed ? 'checked' : ''}" onclick="toggleComplete(${item.id})"></div>
+                            <div class="checkbox ${item.completed ? 'checked' : ''}" onclick="toggleComplete(${item.id})" role="checkbox" aria-checked="${item.completed}"></div>
                         </div>
                     </div>
                 `).join('');
             }
 
-            document.getElementById('item-count').textContent = shoppingItems.length;
+            document.getElementById('item-count').textContent = appState.shoppingItems.length;
         }
 
         function updateBudgetDisplay() {
-            totalSpent = shoppingItems.reduce((sum, item) => {
+            appState.totalSpent = appState.shoppingItems.reduce((sum, item) => {
                 return sum + (item.completed ? 0 : item.price * item.quantity);
             }, 0);
             
-            const remaining = currentBudget - totalSpent;
-            const percentage = Math.min((totalSpent / currentBudget) * 100, 100);
+            const remaining = appState.currentBudget - appState.totalSpent;
+            const percentage = Math.min((appState.totalSpent / appState.currentBudget) * 100, 100);
 
-            document.getElementById('budget-total').textContent = `${totalSpent.toFixed(2)}`;
+            document.getElementById('budget-total').textContent = appState.totalSpent.toFixed(2);
             document.getElementById('budget-remaining').textContent = remaining.toFixed(2);
             document.getElementById('budget-progress').style.width = percentage + '%';
 
-            // Update budget section colors based on spending
             const budgetSection = document.querySelector('.budget-section');
             if (remaining < 0) {
-                budgetSection.style.background = 'linear-gradient(135deg, #ff4757, #ff3838)';
-            } else if (remaining < currentBudget * 0.2) {
-                budgetSection.style.background = 'linear-gradient(135deg, #ffa500, #ff6b35)';
+                budgetSection.style.backgroundColor = '#c0392b';
+            } else if (remaining < appState.currentBudget * 0.2) {
+                budgetSection.style.backgroundColor = '#e67e22';
             } else {
-                budgetSection.style.background = 'linear-gradient(135deg, #ff6b6b, #ffa500)';
+                budgetSection.style.backgroundColor = '#e74c3c';
             }
         }
 
-        // Toast notification system
         function showSuccessToast(message) {
-            showToast(message, '#4facfe');
+            showToast(message, '#27ae60');
         }
 
         function showErrorToast(message) {
-            showToast(message, '#ff4757');
+            showToast(message, '#e74c3c');
         }
 
         function showToast(message, color) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
             const toast = document.createElement('div');
+            toast.className = 'toast';
             toast.style.cssText = `
                 position: fixed;
-                top: 100px;
+                top: 90px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: ${color};
+                background-color: ${color};
                 color: white;
-                padding: 15px 25px;
-                border-radius: 25px;
+                padding: 14px 24px;
+                border-radius: 10px;
                 font-weight: 600;
                 z-index: 1001;
-                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-                animation: slideDown 0.3s ease;
-                max-width: 300px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+                max-width: 320px;
                 text-align: center;
+                font-size: 14px;
+                animation: slideDown 0.3s ease;
             `;
             toast.textContent = message;
             
@@ -1202,39 +1605,39 @@
             }, 3000);
         }
 
-        // Initialize app
         function init() {
             updateDisplay();
             updateWelcomeText('home');
             
-            // Add some sample items for demo
             setTimeout(() => {
                 addItemToList('Organic Milk 1 Gallon', 'Dairy', 4.99);
                 addItemToList('Whole Wheat Bread', 'Bakery', 2.79);
-                addItemToList('Bananas Organic', 'Produce', 1.99);
+                addItemToList('Organic Bananas', 'Produce', 1.99);
             }, 1000);
         }
 
-        // Event listeners
         document.addEventListener('DOMContentLoaded', init);
 
-        // Handle modal clicks (close when clicking outside)
         document.getElementById('add-item-modal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeAddItemModal();
             }
         });
 
-        // Handle enter key in forms
+        document.getElementById('product-detail-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProductDetails();
+            }
+        });
+
         document.getElementById('product-name').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 addManualItem();
             }
         });
 
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
+        const styleElement = document.createElement('style');
+        styleElement.textContent = `
             @keyframes slideDown {
                 from { transform: translateX(-50%) translateY(-20px); opacity: 0; }
                 to { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -1244,9 +1647,8 @@
                 to { transform: translateX(-50%) translateY(-20px); opacity: 0; }
             }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(styleElement);
 
-        // Auto-update welcome text every minute
         setInterval(() => {
             const currentView = document.querySelector('.view.active').id.replace('-view', '');
             updateWelcomeText(currentView);
