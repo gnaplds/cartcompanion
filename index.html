@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CartCompanion - Smart Shopping Assistant with AI-powered recommendations and budget tracking">
+    <link type="image/png" sizes="96x96" rel="icon" href="/icons8-shopping-cart-96(2).png">
     <title>CartCompanion - Smart Shopping Assistant</title>
     <style>
         * {
@@ -822,10 +823,97 @@
             border-color: #2c5aa0;
         }
 
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .confirm-content {
+            background-color: white;
+            margin: 150px auto;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 320px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .confirm-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .confirm-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .confirm-message {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
         .filter-chip.active {
             background-color: #2c5aa0;
             color: white;
             border-color: #2c5aa0;
+        }
+
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .confirm-content {
+            background-color: white;
+            margin: 150px auto;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 320px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .confirm-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .confirm-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .confirm-message {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .confirm-buttons {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -884,18 +972,49 @@
                 </div>
 
                 <div class="recommendations">
-                    <h3>💡 AI-Powered Recommendations</h3>
+                    <h3>🔄 Most Bought Items</h3>
+                    <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 12px;">Based on frequency analysis of your purchase history</p>
                     <div class="recommendation-item" onclick="showProductDetails('Organic Milk 1 Gallon', 'Dairy', 4.99)">
-                        <span>🥛 Organic Milk - Based on purchase history</span>
+                        <span>🥛 Organic Milk - Purchased 28 times</span>
                         <span style="color: #2c5aa0; font-weight: bold;">$4.99</span>
                     </div>
                     <div class="recommendation-item" onclick="showProductDetails('Whole Wheat Bread', 'Bakery', 2.79)">
-                        <span>🍞 Whole Wheat Bread - Frequently bought together</span>
-                        <span style="color: #2c5aa0; font-weight: bold;">$2.79</span>
+                        <span>🍞 Wonder Bread - Purchased 24 times</span>
+                        <span style="color: #2c5aa0; font-weight: bold;">$2.49</span>
                     </div>
                     <div class="recommendation-item" onclick="showProductDetails('Organic Bananas', 'Produce', 1.99)">
-                        <span>🍌 Organic Bananas - Popular this week</span>
+                        <span>🍌 Organic Bananas - Purchased 22 times</span>
                         <span style="color: #2c5aa0; font-weight: bold;">$1.99</span>
+                    </div>
+                    <div class="recommendation-item" onclick="showProductDetails('Eggs Large Dozen', 'Dairy', 3.99)">
+                        <span>🥚 Eggs Large Dozen - Purchased 20 times</span>
+                        <span style="color: #2c5aa0; font-weight: bold;">$3.99</span>
+                    </div>
+                </div>
+
+                <div class="recommendations">
+                    <h3>💡 You Might Also Need</h3>
+                    <p style="font-size: 12px; color: #7f8c8d; margin-bottom: 12px;">Item-based recommendations using K-Nearest Neighbors</p>
+                    <div class="recommendation-item" onclick="showProductDetails('Cheddar Cheese Block', 'Dairy', 5.49)">
+                        <div>
+                            <div>🧀 Cheddar Cheese Block</div>
+                            <div style="font-size: 11px; color: #7f8c8d; margin-top: 3px;">Often bought with Organic Milk</div>
+                        </div>
+                        <span style="color: #2c5aa0; font-weight: bold;">$5.49</span>
+                    </div>
+                    <div class="recommendation-item" onclick="showProductDetails('Bagels Plain 6pk', 'Bakery', 3.79)">
+                        <div>
+                            <div>🥯 Bagels Plain 6pk</div>
+                            <div style="font-size: 11px; color: #7f8c8d; margin-top: 3px;">Similar to Wonder Bread</div>
+                        </div>
+                        <span style="color: #2c5aa0; font-weight: bold;">$3.79</span>
+                    </div>
+                    <div class="recommendation-item" onclick="showProductDetails('Red Apples 3lb', 'Produce', 3.99)">
+                        <div>
+                            <div>🍎 Red Apples 3lb</div>
+                            <div style="font-size: 11px; color: #7f8c8d; margin-top: 3px;">Similar to Organic Bananas</div>
+                        </div>
+                        <span style="color: #2c5aa0; font-weight: bold;">$3.99</span>
                     </div>
                 </div>
             </div>
@@ -1245,6 +1364,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="confirm-modal" id="confirm-modal">
+            <div class="confirm-content">
+                <div class="confirm-icon">⚠️</div>
+                <div class="confirm-title" id="confirm-title">Are you sure?</div>
+                <div class="confirm-message" id="confirm-message">This action cannot be undone.</div>
+                <div class="confirm-buttons">
+                    <button class="btn btn-secondary" onclick="closeConfirmModal()" style="flex: 1;">Cancel</button>
+                    <button class="btn btn-primary" onclick="confirmAction()" style="flex: 1; background-color: #e74c3c;" id="confirm-btn">Confirm</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1253,7 +1384,9 @@
             currentBudget: 100.00,
             totalSpent: 0.00,
             activeFilters: [],
-            currentProduct: null
+            currentProduct: null,
+            pendingAction: null,
+            pendingActionData: null
         };
 
         const productDatabase = {
@@ -1417,7 +1550,11 @@
             if (item) {
                 const newQuantity = item.quantity + delta;
                 if (newQuantity <= 0) {
-                    removeItem(id);
+                    showConfirmModal(
+                        'Remove Item?',
+                        `Are you sure you want to remove "${item.name}" from your list?`,
+                        () => removeItem(id)
+                    );
                 } else {
                     item.quantity = newQuantity;
                     updateDisplay();
@@ -1446,12 +1583,38 @@
             }
         }
 
+        function showConfirmModal(title, message, onConfirm) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            appState.pendingAction = onConfirm;
+            document.getElementById('confirm-modal').style.display = 'block';
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirm-modal').style.display = 'none';
+            appState.pendingAction = null;
+        }
+
+        function confirmAction() {
+            if (appState.pendingAction) {
+                appState.pendingAction();
+                appState.pendingAction = null;
+            }
+            closeConfirmModal();
+        }
+
         function clearCompleted() {
             const completedCount = appState.shoppingItems.filter(item => item.completed).length;
             if (completedCount > 0) {
-                appState.shoppingItems = appState.shoppingItems.filter(item => !item.completed);
-                updateDisplay();
-                showSuccessToast(`Removed ${completedCount} completed items`);
+                showConfirmModal(
+                    'Clear Completed Items?',
+                    `Are you sure you want to remove ${completedCount} completed ${completedCount === 1 ? 'item' : 'items'} from your list?`,
+                    () => {
+                        appState.shoppingItems = appState.shoppingItems.filter(item => !item.completed);
+                        updateDisplay();
+                        showSuccessToast(`Removed ${completedCount} completed items`);
+                    }
+                );
             } else {
                 showSuccessToast('No completed items to clear');
             }
@@ -1627,6 +1790,12 @@
         document.getElementById('product-detail-modal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeProductDetails();
+            }
+        });
+
+        document.getElementById('confirm-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeConfirmModal();
             }
         });
 
