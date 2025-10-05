@@ -29,6 +29,63 @@
             position: relative;
         }
 
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #2c5aa0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-spinner {
+            font-size: 64px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .loading-dots {
+            color: rgba(255,255,255,0.8);
+            font-size: 24px;
+            letter-spacing: 4px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         .welcome-page {
             min-height: 100vh;
             display: flex;
@@ -293,6 +350,16 @@
 
         .btn-success:hover {
             background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
             transform: translateY(-2px);
         }
 
@@ -801,6 +868,7 @@
 
         .view.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         .stats-grid {
@@ -978,8 +1046,13 @@
     </style>
 </head>
 <body>
+    <div class="loading-overlay" id="loading-overlay">
+        <img src="/icons8-shopping-cart-96(7).png" alt="CartCompanion Logo Loading" class="loading-spinner">
+        <div class="loading-text">Loading...</div>
+        <div class="loading-dots">• • •</div>
+    </div>
+
     <div class="container">
-        <!-- Welcome/Landing Page -->
         <div id="welcome-view" class="view active">
             <div class="welcome-page">
                 <div class="welcome-logo">
@@ -1026,7 +1099,6 @@
             </div>
         </div>
 
-        <!-- Login Modal -->
         <div class="modal" id="login-modal">
             <div class="modal-content">
                 <h3 style="margin-bottom: 20px; color: #2c3e50; font-size: 22px; font-weight: 700; text-align: center;">Welcome Back</h3>
@@ -1050,7 +1122,6 @@
             </div>
         </div>
 
-        <!-- Signup Modal -->
         <div class="modal" id="signup-modal">
             <div class="modal-content">
                 <h3 style="margin-bottom: 20px; color: #2c3e50; font-size: 22px; font-weight: 700; text-align: center;">Create Account</h3>
@@ -1099,7 +1170,7 @@
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="openAddItemModal()">➕ Add Item</button>
-                    <button class="btn btn-success" onclick="showCompleteCartModal()">✓ Complete Cart</button>
+                    <button class="btn btn-danger" onclick="showClearAllModal()">🗑️ Clear All</button>
                 </div>
 
                 <section class="shopping-list">
@@ -1127,6 +1198,9 @@
                             <p>Your cart is empty</p>
                             <p style="font-size: 13px; margin-top: 8px;">Check items from shopping list</p>
                         </div>
+                    </div>
+                    <div style="padding: 15px;" id="complete-cart-container" class="hidden">
+                        <button class="btn btn-success" onclick="showCompleteCartModal()" style="width: 100%;">✓ Complete Cart</button>
                     </div>
                 </section>
 
@@ -1284,6 +1358,10 @@
                         </div>
                     </div>
                 </div>
+
+                <button class="btn btn-danger" onclick="backToWelcome()" style="width: 100%; margin-top: 20px;">
+                    ← Back to Welcome Page
+                </button>
             </main>
         </div>
 
@@ -1532,8 +1610,40 @@
             { name: 'Cheese', category: 'Dairy', icon: '🧀', price: 5.49, reason: 'Trending in your area' }
         ];
 
+        function showLoadingOverlay() {
+            document.getElementById('loading-overlay').classList.add('active');
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById('loading-overlay').classList.remove('active');
+        }
+
         function startShopping() {
-            showView('home');
+            showLoadingOverlay();
+            
+            setTimeout(() => {
+                hideLoadingOverlay();
+                showView('home');
+            }, 1500);
+        }
+
+        function backToWelcome() {
+            showConfirmModal(
+                'Return to Welcome Page?',
+                'This will clear your current shopping session. Are you sure you want to go back?',
+                () => {
+                    showLoadingOverlay();
+                    
+                    setTimeout(() => {
+                        appState.shoppingList = [];
+                        appState.cartList = [];
+                        appState.totalSpent = 0.00;
+                        
+                        hideLoadingOverlay();
+                        showView('welcome');
+                    }, 1500);
+                }
+            );
         }
 
         function showLogin() {
@@ -1551,12 +1661,17 @@
             const password = document.getElementById('login-password').value;
 
             if (email && password) {
-                appState.userData.email = email;
-                appState.userData.name = email.split('@')[0];
-                updateProfileInfo();
                 closeLogin();
-                showView('home');
-                showToast(`Welcome back, ${appState.userData.name}!`, '#27ae60');
+                showLoadingOverlay();
+                
+                setTimeout(() => {
+                    appState.userData.email = email;
+                    appState.userData.name = email.split('@')[0];
+                    updateProfileInfo();
+                    hideLoadingOverlay();
+                    showView('home');
+                    showToast(`Welcome back, ${appState.userData.name}!`, '#27ae60');
+                }, 1500);
             } else {
                 showToast('Please enter your email and password', '#e74c3c');
             }
@@ -1579,12 +1694,17 @@
             const password = document.getElementById('signup-password').value;
 
             if (name && email && password) {
-                appState.userData.name = name;
-                appState.userData.email = email;
-                updateProfileInfo();
                 closeSignup();
-                showView('home');
-                showToast(`Welcome ${name}! Account created successfully`, '#27ae60');
+                showLoadingOverlay();
+                
+                setTimeout(() => {
+                    appState.userData.name = name;
+                    appState.userData.email = email;
+                    updateProfileInfo();
+                    hideLoadingOverlay();
+                    showView('home');
+                    showToast(`Welcome ${name}! Account created successfully`, '#27ae60');
+                }, 1500);
             } else {
                 showToast('Please fill in all fields', '#e74c3c');
             }
@@ -1964,6 +2084,24 @@
             updateDisplay();
         }
 
+        function showClearAllModal() {
+            if (appState.shoppingList.length === 0) {
+                showToast('Shopping list is already empty', '#e67e22');
+                return;
+            }
+
+            showConfirmModal(
+                'Clear All Items?',
+                'Are you sure you want to remove all items from your shopping list? This will also clear your cart.',
+                () => {
+                    appState.shoppingList = [];
+                    appState.cartList = [];
+                    showToast('All items cleared', '#27ae60');
+                    updateDisplay();
+                }
+            );
+        }
+
         function showCompleteCartModal() {
             if (appState.cartList.length === 0) {
                 showToast('Your cart is empty', '#e67e22');
@@ -2077,6 +2215,7 @@
 
         function updateCartList() {
             const container = document.getElementById('cart-items');
+            const completeButton = document.getElementById('complete-cart-container');
             
             if (appState.cartList.length === 0) {
                 container.innerHTML = `
@@ -2086,6 +2225,7 @@
                         <p style="font-size: 13px; margin-top: 8px;">Check items from shopping list</p>
                     </div>
                 `;
+                completeButton.classList.add('hidden');
             } else {
                 container.innerHTML = appState.cartList.map(item => {
                     const icon = item.icon || '📦';
@@ -2111,6 +2251,7 @@
                         </div>
                     </div>
                 `}).join('');
+                completeButton.classList.remove('hidden');
             }
 
             document.getElementById('cart-item-count').textContent = appState.cartList.length;
