@@ -1805,6 +1805,54 @@
         #shopping-total-section {
             background-color: var(--color-primary-light);
         }
+
+        /* Image Preview Container with Close Button */
+        .image-preview-container {
+            position: relative;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .image-preview-container.show {
+            display: block;
+        }
+
+        .image-preview-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .image-preview-container .image-preview {
+            display: block;
+            margin-top: 0;
+        }
+
+        .image-preview-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            background-color: var(--color-danger);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .image-preview-close-btn:hover {
+            background-color: var(--color-danger-dark);
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -2316,7 +2364,12 @@
                                 <button type="button" onclick="openCamera('add')" class="file-input-label" style="flex: 1; border: none; cursor: pointer;">📷 Camera</button>
                             </div>
                             <input type="file" id="product-image" class="file-input" accept="image/*">
-                            <img id="image-preview" class="image-preview" alt="Item preview">
+                            <div id="add-image-preview-container" class="image-preview-container">
+                                <div class="image-preview-wrapper">
+                                    <img id="image-preview" class="image-preview" alt="Item preview">
+                                    <button type="button" class="image-preview-close-btn" onclick="removeImage('add')" title="Remove image">×</button>
+                                </div>
+                            </div>
                             <p style="font-size: 12px; color: #7f8c8d; margin-top: 8px;">If no image is provided, emoji will be used</p>
                         </div>
                         <div class="form-group">
@@ -2441,7 +2494,12 @@
                                 <button type="button" onclick="openCamera('edit')" class="file-input-label" style="flex: 1; border: none; cursor: pointer;">📷 Camera</button>
                             </div>
                             <input type="file" id="edit-product-image" class="file-input" accept="image/*">
-                            <img id="edit-image-preview" class="image-preview" alt="Item preview">
+                            <div id="edit-image-preview-container" class="image-preview-container">
+                                <div class="image-preview-wrapper">
+                                    <img id="edit-image-preview" class="image-preview" alt="Item preview">
+                                    <button type="button" class="image-preview-close-btn" onclick="removeImage('edit')" title="Remove image">×</button>
+                                </div>
+                            </div>
                             <p style="font-size: 12px; color: #7f8c8d; margin-top: 8px;">If no image is provided, emoji will be used</p>
                         </div>
                         <div class="form-group">
@@ -2547,7 +2605,12 @@
                                 <button type="button" onclick="openCamera('database')" class="file-input-label" style="flex: 1; border: none; cursor: pointer;">📷 Camera</button>
                             </div>
                             <input type="file" id="db-product-image" class="file-input" accept="image/*">
-                            <img id="db-image-preview" class="image-preview" alt="Product preview">
+                            <div id="db-image-preview-container" class="image-preview-container">
+                                <div class="image-preview-wrapper">
+                                    <img id="db-image-preview" class="image-preview" alt="Product preview">
+                                    <button type="button" class="image-preview-close-btn" onclick="removeImage('database')" title="Remove image">×</button>
+                                </div>
+                            </div>
                             <p style="font-size: 12px; color: #7f8c8d; margin-top: 8px;">If no image is provided, emoji will be used</p>
                         </div>
                         
@@ -2916,13 +2979,13 @@
                 date: 'May 15, 2025',
                 total: 487.50,
                 items: [
-                    { name: 'Red Apples', icon: '🍎', price: 3.99, quantity: 3 },
-                    { name: 'Fresh Milk', icon: '🥛', price: 4.99, quantity: 2 },
-                    { name: 'Wheat Bread', icon: '🍞', price: 2.49, quantity: 2 },
-                    { name: 'Eggs 12pc', icon: '🥚', price: 3.99, quantity: 1 },
-                    { name: 'Chicken', icon: '🍗', price: 7.99, quantity: 2 },
-                    { name: 'White Rice', icon: '🍚', price: 4.99, quantity: 5 },
-                    { name: 'Carrots', icon: '🥕', price: 2.49, quantity: 3 }
+                    { name: 'Red Apples', category: 'Fruits', icon: '🍎', price: 3.99, quantity: 3 },
+                    { name: 'Fresh Milk', category: 'Dairy', icon: '🥛', price: 4.99, quantity: 2 },
+                    { name: 'Wheat Bread', category: 'Bread & Bakery', icon: '🍞', price: 2.49, quantity: 2 },
+                    { name: 'Eggs 12pc', category: 'Dairy', icon: '🥚', price: 3.99, quantity: 1 },
+                    { name: 'Chicken', category: 'Meat', icon: '🍗', price: 7.99, quantity: 2 },
+                    { name: 'White Rice', category: 'Pasta, Rice & Cereal', icon: '🍚', price: 4.99, quantity: 5 },
+                    { name: 'Carrots', category: 'Vegetables', icon: '🥕', price: 2.49, quantity: 3 }
                 ]
             },
             {
@@ -2931,11 +2994,11 @@
                 date: 'May 10, 2025',
                 total: 156.20,
                 items: [
-                    { name: 'Coffee', icon: '☕', price: 6.99, quantity: 2 },
-                    { name: 'Butter', icon: '🧈', price: 4.49, quantity: 1 },
-                    { name: 'Chips', icon: '🥔', price: 2.99, quantity: 3 },
-                    { name: 'OJ 1L', icon: '🧃', price: 3.49, quantity: 2 },
-                    { name: 'Tomato Soup', icon: '🥫', price: 1.99, quantity: 4 }
+                    { name: 'Coffee', category: 'Beverages', icon: '☕', price: 6.99, quantity: 2 },
+                    { name: 'Butter', category: 'Dairy', icon: '🧈', price: 4.49, quantity: 1 },
+                    { name: 'Chips', category: 'Snacks', icon: '🥔', price: 2.99, quantity: 3 },
+                    { name: 'OJ 1L', category: 'Beverages', icon: '🧃', price: 3.49, quantity: 2 },
+                    { name: 'Tomato Soup', category: 'Canned Goods', icon: '🥫', price: 1.99, quantity: 4 }
                 ]
             },
             {
@@ -2944,15 +3007,15 @@
                 date: 'May 1, 2025',
                 total: 892.75,
                 items: [
-                    { name: 'Salmon', icon: '🐟', price: 12.99, quantity: 3 },
-                    { name: 'Sliced Ham', icon: '🥓', price: 6.49, quantity: 2 },
-                    { name: 'Olive Oil', icon: '🫒', price: 8.99, quantity: 1 },
-                    { name: 'Ice Cream', icon: '🍦', price: 5.99, quantity: 4 },
-                    { name: 'Shampoo', icon: '🧴', price: 4.49, quantity: 3 },
-                    { name: 'Dish Soap', icon: '🧼', price: 2.99, quantity: 5 },
-                    { name: 'Dog Food', icon: '🐕', price: 15.99, quantity: 2 },
-                    { name: 'Diapers', icon: '👶', price: 18.99, quantity: 1 },
-                    { name: 'Flour 2kg', icon: '🌾', price: 3.99, quantity: 3 }
+                    { name: 'Salmon', category: 'Fish & Seafood', icon: '🐟', price: 12.99, quantity: 3 },
+                    { name: 'Sliced Ham', category: 'Deli', icon: '🥓', price: 6.49, quantity: 2 },
+                    { name: 'Olive Oil', category: 'Condiments & Spices', icon: '🫒', price: 8.99, quantity: 1 },
+                    { name: 'Ice Cream', category: 'Frozen Foods', icon: '🍦', price: 5.99, quantity: 4 },
+                    { name: 'Shampoo', category: 'Personal Care', icon: '🧴', price: 4.49, quantity: 3 },
+                    { name: 'Dish Soap', category: 'Household & Cleaning', icon: '🧼', price: 2.99, quantity: 5 },
+                    { name: 'Dog Food', category: 'Pet Care', icon: '🐕', price: 15.99, quantity: 2 },
+                    { name: 'Diapers', category: 'Baby Items', icon: '👶', price: 18.99, quantity: 1 },
+                    { name: 'Flour 2kg', category: 'Baking', icon: '🌾', price: 3.99, quantity: 3 }
                 ]
             }
         ];
@@ -3517,7 +3580,7 @@
             document.getElementById('db-product-price').value = '';
             document.getElementById('db-product-icon').value = '📦';
             document.getElementById('db-product-image').value = '';
-            document.getElementById('db-image-preview').classList.remove('show');
+            document.getElementById('db-image-preview-container').classList.remove('show');
             document.getElementById('db-image-preview').src = '';
             
             // Set modal for adding new product
@@ -3580,7 +3643,7 @@
             document.getElementById('product-price').value = '';
             document.getElementById('product-icon').value = '';
             document.getElementById('product-image').value = '';
-            document.getElementById('image-preview').classList.remove('show');
+            document.getElementById('add-image-preview-container').classList.remove('show');
             document.getElementById('image-preview').src = '';
         }
 
@@ -3666,9 +3729,9 @@
             
             if (item.image) {
                 document.getElementById('edit-image-preview').src = item.image;
-                document.getElementById('edit-image-preview').classList.add('show');
+                document.getElementById('edit-image-preview-container').classList.add('show');
             } else {
-                document.getElementById('edit-image-preview').classList.remove('show');
+                document.getElementById('edit-image-preview-container').classList.remove('show');
             }
             
             document.getElementById('edit-item-modal').style.display = 'block';
@@ -3681,7 +3744,7 @@
             document.getElementById('edit-product-price').value = '';
             document.getElementById('edit-product-icon').value = '';
             document.getElementById('edit-product-image').value = '';
-            document.getElementById('edit-image-preview').classList.remove('show');
+            document.getElementById('edit-image-preview-container').classList.remove('show');
             document.getElementById('edit-image-preview').src = '';
             appState.editingItemId = null;
         }
@@ -3927,6 +3990,44 @@
                 return;
             }
 
+            // Get checked items from cart
+            const checkedItems = appState.cartList.filter(item => item.checked);
+            
+            if (checkedItems.length === 0) {
+                showToast('No items selected to complete', '#e74c3c');
+                return;
+            }
+
+            // Calculate total
+            const total = checkedItems.reduce((sum, item) => {
+                const price = item.price || 0;
+                const quantity = item.quantity || 1;
+                return sum + (price * quantity);
+            }, 0);
+
+            // Get current date and time
+            const now = new Date();
+            const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+            const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+            
+            // Create purchase object
+            const newPurchase = {
+                id: purchaseHistory.length + 1,
+                storeName: storeName,
+                date: formattedDate,
+                total: total,
+                items: checkedItems.map(item => ({
+                    name: item.name,
+                    category: item.category,
+                    price: item.price || 0,
+                    quantity: item.quantity || 1,
+                    icon: item.icon || '📦'
+                }))
+            };
+
+            // Add to purchase history at the beginning (most recent first)
+            purchaseHistory.unshift(newPurchase);
+
             // Remove only checked items from cart
             appState.cartList = appState.cartList.filter(item => !item.checked);
             
@@ -4075,30 +4176,26 @@
                 </div>
                 
                 <section class="shopping-list ${subscription === 'guest' ? 'blurred-section' : ''}">
-                    <div class="list-header shopping">Recent Purchases</div>
-                    <div class="list-item" onclick="showPurchaseDetails(1)" style="cursor: pointer;">
-                        <div class="item-image">🛒</div>
-                        <div class="item-info">
-                            <div class="item-name">Weekly Shopping</div>
-                            <div class="item-category">Supermart • May 15, 2025</div>
-                        </div>
-                        <div class="item-price">₱487.50</div>
+                    <div class="list-header shopping" onclick="toggleListSection('recent-purchases')">
+                        <span>Recent Purchases</span>
+                        <span class="list-header-toggle" id="recent-purchases-toggle">▼</span>
                     </div>
-                    <div class="list-item" onclick="showPurchaseDetails(2)" style="cursor: pointer;">
-                        <div class="item-image">🛒</div>
-                        <div class="item-info">
-                            <div class="item-name">Quick Shopping</div>
-                            <div class="item-category">Local Store • May 10, 2025</div>
-                        </div>
-                        <div class="item-price">₱156.20</div>
-                    </div>
-                    <div class="list-item" onclick="showPurchaseDetails(3)" style="cursor: pointer;">
-                        <div class="item-image">🛒</div>
-                        <div class="item-info">
-                            <div class="item-name">Monthly Groceries</div>
-                            <div class="item-category">MegaMall • May 1, 2025</div>
-                        </div>
-                        <div class="item-price">₱892.75</div>
+                    <div class="list-content" id="recent-purchases-content">
+                        ${purchaseHistory.length > 0 ? purchaseHistory.map((purchase, index) => `
+                            <div class="list-item" onclick="showPurchaseDetails(${purchase.id})" style="cursor: pointer;">
+                                <div class="item-image">🛒</div>
+                                <div class="item-info">
+                                    <div class="item-name">${purchase.storeName}</div>
+                                    <div class="item-category">${purchase.date} • ${purchase.items.length} ITEMS</div>
+                                </div>
+                                <div class="item-price">₱${purchase.total.toFixed(2)}</div>
+                            </div>
+                        `).join('') : `
+                            <div class="empty-state">
+                                <div class="empty-icon">📦</div>
+                                <div class="empty-state-text">No purchases yet</div>
+                            </div>
+                        `}
                     </div>
                 </section>
                 
@@ -4203,9 +4300,9 @@
             
             if (product.image) {
                 document.getElementById('db-image-preview').src = product.image;
-                document.getElementById('db-image-preview').classList.add('show');
+                document.getElementById('db-image-preview-container').classList.add('show');
             } else {
-                document.getElementById('db-image-preview').classList.remove('show');
+                document.getElementById('db-image-preview-container').classList.remove('show');
             }
             
             // Set modal for editing existing product
@@ -4224,7 +4321,7 @@
             document.getElementById('db-product-price').value = '';
             document.getElementById('db-product-icon').value = '';
             document.getElementById('db-product-image').value = '';
-            document.getElementById('db-image-preview').classList.remove('show');
+            document.getElementById('db-image-preview-container').classList.remove('show');
             document.getElementById('db-image-preview').src = '';
             appState.editingProductId = null;
         }
@@ -4419,8 +4516,18 @@
         }
 
         function toggleListSection(section) {
-            const contentId = section === 'shopping' ? 'shopping-list-content' : 'cart-list-content';
-            const toggleId = section === 'shopping' ? 'shopping-list-toggle' : 'cart-list-toggle';
+            let contentId, toggleId;
+            
+            if (section === 'shopping') {
+                contentId = 'shopping-list-content';
+                toggleId = 'shopping-list-toggle';
+            } else if (section === 'cart') {
+                contentId = 'cart-list-content';
+                toggleId = 'cart-list-toggle';
+            } else if (section === 'recent-purchases') {
+                contentId = 'recent-purchases-content';
+                toggleId = 'recent-purchases-toggle';
+            }
             
             const content = document.getElementById(contentId);
             const toggle = document.getElementById(toggleId);
@@ -4653,6 +4760,51 @@
             document.getElementById('item-details-modal').style.display = 'none';
         }
 
+        /**
+         * Removes the selected image from the specified modal type
+         * Shows a confirmation modal before removing
+         * @param {string} modalType - Type of modal: 'add', 'edit', or 'database'
+         */
+        function removeImage(modalType) {
+            showConfirmModal(
+                'Remove Image',
+                'Are you sure you want to remove this image? This action cannot be undone.',
+                () => {
+                    let inputId, previewId, containerId;
+                    
+                    // Determine the IDs based on modal type
+                    if (modalType === 'add') {
+                        inputId = 'product-image';
+                        previewId = 'image-preview';
+                        containerId = 'add-image-preview-container';
+                    } else if (modalType === 'edit') {
+                        inputId = 'edit-product-image';
+                        previewId = 'edit-image-preview';
+                        containerId = 'edit-image-preview-container';
+                    } else if (modalType === 'database') {
+                        inputId = 'db-product-image';
+                        previewId = 'db-image-preview';
+                        containerId = 'db-image-preview-container';
+                    }
+                    
+                    // Clear the file input
+                    const fileInput = document.getElementById(inputId);
+                    fileInput.value = '';
+                    
+                    // Clear the image preview
+                    const preview = document.getElementById(previewId);
+                    preview.src = '';
+                    
+                    // Hide the preview container
+                    const container = document.getElementById(containerId);
+                    container.classList.remove('show');
+                    
+                    // Show success message
+                    showToast('Image removed successfully', '#27ae60');
+                }
+            );
+        }
+
         function showToast(message, color) {
             const existingToast = document.querySelector('.toast');
             if (existingToast) existingToast.remove();
@@ -4694,8 +4846,9 @@
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     const preview = document.getElementById('image-preview');
+                    const container = document.getElementById('add-image-preview-container');
                     preview.src = event.target.result;
-                    preview.classList.add('show');
+                    container.classList.add('show');
                 };
                 reader.readAsDataURL(file);
             }
@@ -4707,8 +4860,9 @@
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     const preview = document.getElementById('edit-image-preview');
+                    const container = document.getElementById('edit-image-preview-container');
                     preview.src = event.target.result;
-                    preview.classList.add('show');
+                    container.classList.add('show');
                 };
                 reader.readAsDataURL(file);
             }
@@ -4720,8 +4874,9 @@
                 const reader = new FileReader();
                 reader.onload = (event) => {
                     const preview = document.getElementById('db-image-preview');
+                    const container = document.getElementById('db-image-preview-container');
                     preview.src = event.target.result;
-                    preview.classList.add('show');
+                    container.classList.add('show');
                 };
                 reader.readAsDataURL(file);
             }
