@@ -2164,7 +2164,7 @@
                         <div class="list-item profile-item-clickable" onclick="changeSubscription()">
                             <div class="item-info">
                                 <div class="item-name">Current Plan</div>
-                                <div class="item-category" id="subscription-details">PREMIUM - ₱199/MO</div>
+                                <div class="item-category" id="subscription-details">PREMIUM - ₱99/MO</div>
                             </div>
                             <div class="profile-change-link">Change →</div>
                         </div>
@@ -2689,7 +2689,7 @@
                     <div style="margin-bottom: 15px; padding: 15px; border-radius: 10px; border: 2px solid #3498db; background-color: #ebf5fb; cursor: pointer;" onclick="selectSubscription('standard')">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: 700; font-size: 16px; color: #2c3e50;">Standard</span>
-                            <span class="subscription-badge badge-standard">₱99/mo</span>
+                            <span class="subscription-badge badge-standard">₱49/mo</span>
                         </div>
                         <div style="font-size: 13px; color: #7f8c8d; margin-bottom: 10px;">Essential shopping tools</div>
                         <div style="font-size: 12px; color: #2c3e50;">
@@ -2704,7 +2704,7 @@
                     <div style="margin-bottom: 15px; padding: 15px; border-radius: 10px; border: 2px solid #f39c12; background-color: #fef5e7; cursor: pointer;" onclick="selectSubscription('premium')">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <span style="font-weight: 700; font-size: 16px; color: #2c3e50;">Premium</span>
-                            <span class="subscription-badge badge-premium">₱199/mo</span>
+                            <span class="subscription-badge badge-premium">₱99/mo</span>
                         </div>
                         <div style="font-size: 13px; color: #7f8c8d; margin-bottom: 10px;">Complete smart shopping experience</div>
                         <div style="font-size: 12px; color: #2c3e50;">
@@ -3415,8 +3415,8 @@
 
             const tierPrices = {
                 'guest': 'FREE',
-                'standard': '₱99/mo',
-                'premium': '₱199/mo'
+                'standard': '₱49/mo',
+                'premium': '₱99/mo'
             };
 
             showConfirmModal(
@@ -3440,9 +3440,9 @@
             if (subscription === 'guest') {
                 detailsElement.textContent = 'GUEST - FREE';
             } else if (subscription === 'standard') {
-                detailsElement.textContent = 'STANDARD - ₱99/MO';
+                detailsElement.textContent = 'STANDARD - ₱49/MO';
             } else if (subscription === 'premium') {
-                detailsElement.textContent = 'PREMIUM - ₱199/MO';
+                detailsElement.textContent = 'PREMIUM - ₱99/MO';
             }
         }
 
