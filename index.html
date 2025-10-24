@@ -528,6 +528,26 @@
             justify-content: center;
             font-size: 24px;
             flex-shrink: 0;
+            position: relative;
+        }
+
+        .quantity-badge {
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            background-color: var(--color-primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 6px;
+            border-radius: 50%;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            border: 2px solid white;
         }
 
         .list-item:hover {
@@ -1976,7 +1996,7 @@
         <!-- Top Header Navigation -->
         <header class="top-header initial-hidden">
             <div>
-                <div class="welcome-text">Good Morning!</div>
+                <div class="welcome-text" id="welcome-text">Good Morning!</div>
                 <div class="welcome-subtext">Ready to shop smart?</div>
             </div>
             <button class="profile-icon" onclick="showView('profile')" aria-label="View profile" id="header-profile-icon">👤</button>
@@ -2011,7 +2031,7 @@
                         <div class="budget-bar">
                             <div class="budget-progress" id="budget-progress"></div>
                         </div>
-                        <div class="budget-remaining">Remaining: ₱<span id="budget-remaining">500.00</span></div>
+                        <div class="budget-remaining">Remaining: ₱<span id="budget-remaining">1000.00</span></div>
                     </section>
                 </div>
 
@@ -2178,7 +2198,7 @@
                                 <div class="item-name">Default Budget</div>
                                 <div class="item-category">PER SHOPPING TRIP</div>
                             </div>
-                            <div class="item-price">₱500.00</div>
+                            <div class="item-price">₱1000.00</div>
                         </div>
                         <div class="list-item">
                             <div class="item-info">
@@ -2357,6 +2377,10 @@
                             <label class="form-label" for="product-price">Price (₱)</label>
                             <input type="number" id="product-price" class="form-input" placeholder="e.g., 50.00" step="0.01" min="0">
                         </div>
+                        <div class="form-group" id="admin-quantity-field" style="display: none;">
+                            <label class="form-label" for="product-quantity">Quantity Available</label>
+                            <input type="number" id="product-quantity" class="form-input" placeholder="e.g., 50" min="0" step="1">
+                        </div>
                         <div class="form-group">
                             <label class="form-label">Item Image (Optional)</label>
                             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
@@ -2487,6 +2511,10 @@
                             <label class="form-label" for="edit-product-price">Price (₱) - Optional</label>
                             <input type="number" id="edit-product-price" class="form-input" step="0.01" min="0" placeholder="0.00">
                         </div>
+                        <div class="form-group" id="edit-admin-quantity-field" style="display: none;">
+                            <label class="form-label" for="edit-product-quantity">Quantity Available</label>
+                            <input type="number" id="edit-product-quantity" class="form-input" placeholder="e.g., 50" min="0" step="1">
+                        </div>
                         <div class="form-group">
                             <label class="form-label">Item Image (Optional)</label>
                             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
@@ -2596,6 +2624,11 @@
                         <div class="form-group">
                             <label class="form-label">Price (₱) *</label>
                             <input type="number" id="db-product-price" class="form-input" step="0.01" min="0" required placeholder="0.00">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Quantity Available *</label>
+                            <input type="number" id="db-product-quantity" class="form-input" min="0" step="1" required placeholder="e.g., 50">
                         </div>
                         
                         <div class="form-group">
@@ -2889,7 +2922,7 @@
         const appState = {
             shoppingList: [],      // Items planned to buy
             cartList: [],          // Items currently in cart (checked from shopping list)
-            currentBudget: 500.00, // Default budget per shopping trip
+            currentBudget: 1000.00, // Default budget per shopping trip
             totalSpent: 0.00,      // Running total of cart items
             currentScannedItem: null, // Temporarily stores scanned product details
             pendingAction: null,   // Stores pending confirmation actions
@@ -2922,25 +2955,25 @@
         // Sample product database - keyed by barcode
         // In production, this would be fetched from a backend API
         const productDatabase = {
-            '123456789001': { name: 'Red Apples', category: 'Fruits', icon: '🍎', price: 3.99 },
-            '123456789002': { name: 'Carrots', category: 'Vegetables', icon: '🥕', price: 2.49 },
-            '123456789003': { name: 'Tomato Soup', category: 'Canned Goods', icon: '🥫', price: 1.99 },
-            '123456789004': { name: 'Fresh Milk', category: 'Dairy', icon: '🥛', price: 4.99 },
-            '123456789005': { name: 'Chicken', category: 'Meat', icon: '🍗', price: 7.99 },
-            '123456789006': { name: 'Salmon', category: 'Fish & Seafood', icon: '🐟', price: 12.99 },
-            '123456789007': { name: 'Sliced Ham', category: 'Deli', icon: '🥓', price: 6.49 },
-            '123456789008': { name: 'Olive Oil', category: 'Condiments & Spices', icon: '🫒', price: 8.99 },
-            '123456789009': { name: 'Chips', category: 'Snacks', icon: '🥔', price: 2.99 },
-            '123456789010': { name: 'Wheat Bread', category: 'Bread & Bakery', icon: '🍞', price: 2.49 },
-            '123456789011': { name: 'OJ 1L', category: 'Beverages', icon: '🧃', price: 3.49 },
-            '123456789012': { name: 'White Rice', category: 'Pasta, Rice & Cereal', icon: '🍚', price: 4.99 },
-            '123456789013': { name: 'Flour 2kg', category: 'Baking', icon: '🌾', price: 3.99 },
-            '123456789014': { name: 'Ice Cream', category: 'Frozen Foods', icon: '🍦', price: 5.99 },
-            '123456789015': { name: 'Shampoo', category: 'Personal Care', icon: '🧴', price: 4.49 },
-            '123456789016': { name: 'Band-Aids', category: 'Health Care', icon: '🩹', price: 3.29 },
-            '123456789017': { name: 'Dish Soap', category: 'Household & Cleaning', icon: '🧼', price: 2.99 },
-            '123456789018': { name: 'Diapers', category: 'Baby Items', icon: '👶', price: 18.99 },
-            '123456789019': { name: 'Dog Food', category: 'Pet Care', icon: '🐕', price: 15.99 }
+            '123456789001': { name: 'Mango (Manila)', category: 'Fruits', icon: '🥭', price: 45.00, quantity: 50 },
+            '123456789002': { name: 'Kangkong', category: 'Vegetables', icon: '�', price: 25.00, quantity: 35 },
+            '123456789003': { name: 'Sardinas', category: 'Canned Goods', icon: '🥫', price: 28.50, quantity: 100 },
+            '123456789004': { name: 'Condensada', category: 'Dairy', icon: '🥛', price: 35.00, quantity: 25 },
+            '123456789005': { name: 'Pork Liempo', category: 'Meat', icon: '🥩', price: 280.00, quantity: 15 },
+            '123456789006': { name: 'Bangus (Milkfish)', category: 'Fish & Seafood', icon: '🐟', price: 150.00, quantity: 10 },
+            '123456789007': { name: 'Longganisa', category: 'Deli', icon: '🌭', price: 120.00, quantity: 20 },
+            '123456789008': { name: 'Patis (Fish Sauce)', category: 'Condiments & Spices', icon: '�', price: 32.00, quantity: 30 },
+            '123456789009': { name: 'Chicharon', category: 'Snacks', icon: '�', price: 55.00, quantity: 75 },
+            '123456789010': { name: 'Pandesal', category: 'Bread & Bakery', icon: '🍞', price: 35.00, quantity: 40 },
+            '123456789011': { name: 'Calamansi Juice', category: 'Beverages', icon: '🍋', price: 45.00, quantity: 45 },
+            '123456789012': { name: 'Bigas (Rice) 5kg', category: 'Pasta, Rice & Cereal', icon: '🍚', price: 245.00, quantity: 60 },
+            '123456789013': { name: 'Harina (Flour) 2kg', category: 'Baking', icon: '🌾', price: 65.00, quantity: 55 },
+            '123456789014': { name: 'Ube Ice Cream', category: 'Frozen Foods', icon: '�', price: 120.00, quantity: 22 },
+            '123456789015': { name: 'Papaya Soap', category: 'Personal Care', icon: '�', price: 28.00, quantity: 38 },
+            '123456789016': { name: 'Katinko', category: 'Health Care', icon: '💊', price: 45.00, quantity: 80 },
+            '123456789017': { name: 'Zonrox Bleach', category: 'Household & Cleaning', icon: '�', price: 38.00, quantity: 65 },
+            '123456789018': { name: 'Baby Diapers', category: 'Baby Items', icon: '👶', price: 285.00, quantity: 12 },
+            '123456789019': { name: 'Pedigree Dog Food', category: 'Pet Care', icon: '🐕', price: 195.00, quantity: 28 }
         };
 
         /* ================================================
@@ -2950,21 +2983,21 @@
         // AI-powered recommendations based on purchase frequency
         // Generated using Firebase Genkit AI
         const aiRecommendations = [
-            { name: 'Bananas', category: 'Fruits', icon: '🍌', price: 1.99, purchases: 28 },
-            { name: 'Eggs 12pc', category: 'Dairy', icon: '🥚', price: 3.99, purchases: 24 },
-            { name: 'Coffee', category: 'Beverages', icon: '☕', price: 6.99, purchases: 22 },
-            { name: 'Butter', category: 'Dairy', icon: '🧈', price: 4.49, purchases: 20 },
-            { name: 'Potatoes', category: 'Vegetables', icon: '🥔', price: 2.99, purchases: 18 },
-            { name: 'Yogurt', category: 'Dairy', icon: '🥛', price: 2.99, purchases: 16 }
+            { name: 'Saba Banana', category: 'Fruits', icon: '🍌', price: 32.00, purchases: 28 },
+            { name: 'Itlog (Eggs) 12pc', category: 'Dairy', icon: '🥚', price: 85.00, purchases: 24 },
+            { name: 'Barako Coffee', category: 'Beverages', icon: '☕', price: 145.00, purchases: 22 },
+            { name: 'Star Margarine', category: 'Dairy', icon: '🧈', price: 48.00, purchases: 20 },
+            { name: 'Kamote (Sweet Potato)', category: 'Vegetables', icon: '🍠', price: 42.00, purchases: 18 },
+            { name: 'Yakult', category: 'Dairy', icon: '🥛', price: 58.00, purchases: 16 }
         ];
 
         // Smart AI suggestions based on shopping patterns
         // Generated using Firebase Genkit AI
         const aiSuggestions = [
-            { name: 'Pasta', category: 'Pasta, Rice & Cereal', icon: '🍝', price: 1.99, reason: 'Often bought with sauce' },
-            { name: 'Beef', category: 'Meat', icon: '🥩', price: 9.99, reason: 'Running low based on history' },
-            { name: 'Tomatoes', category: 'Vegetables', icon: '🍅', price: 2.49, reason: 'Great with pasta' },
-            { name: 'Cheese', category: 'Dairy', icon: '🧀', price: 5.49, reason: 'Trending in your area' }
+            { name: 'Pancit Canton', category: 'Pasta, Rice & Cereal', icon: '�', price: 28.00, reason: 'Often bought with sauce' },
+            { name: 'Beef Tapa', category: 'Meat', icon: '🥩', price: 185.00, reason: 'Running low based on history' },
+            { name: 'Kamatis (Tomatoes)', category: 'Vegetables', icon: '🍅', price: 35.00, reason: 'Great with sinigang' },
+            { name: 'Eden Cheese', category: 'Dairy', icon: '🧀', price: 68.00, reason: 'Trending in your area' }
         ];
 
         /* ================================================
@@ -2975,47 +3008,47 @@
         const purchaseHistory = [
             {
                 id: 1,
-                storeName: 'Supermart',
+                storeName: 'SM Supermarket',
                 date: 'May 15, 2025',
-                total: 487.50,
+                total: 1245.00,
                 items: [
-                    { name: 'Red Apples', category: 'Fruits', icon: '🍎', price: 3.99, quantity: 3 },
-                    { name: 'Fresh Milk', category: 'Dairy', icon: '🥛', price: 4.99, quantity: 2 },
-                    { name: 'Wheat Bread', category: 'Bread & Bakery', icon: '🍞', price: 2.49, quantity: 2 },
-                    { name: 'Eggs 12pc', category: 'Dairy', icon: '🥚', price: 3.99, quantity: 1 },
-                    { name: 'Chicken', category: 'Meat', icon: '🍗', price: 7.99, quantity: 2 },
-                    { name: 'White Rice', category: 'Pasta, Rice & Cereal', icon: '🍚', price: 4.99, quantity: 5 },
-                    { name: 'Carrots', category: 'Vegetables', icon: '🥕', price: 2.49, quantity: 3 }
+                    { name: 'Mango (Manila)', category: 'Fruits', icon: '🥭', price: 45.00, quantity: 3 },
+                    { name: 'Condensada', category: 'Dairy', icon: '🥛', price: 35.00, quantity: 2 },
+                    { name: 'Pandesal', category: 'Bread & Bakery', icon: '🍞', price: 35.00, quantity: 2 },
+                    { name: 'Itlog (Eggs) 12pc', category: 'Dairy', icon: '🥚', price: 85.00, quantity: 1 },
+                    { name: 'Pork Liempo', category: 'Meat', icon: '🥩', price: 280.00, quantity: 2 },
+                    { name: 'Bigas (Rice) 5kg', category: 'Pasta, Rice & Cereal', icon: '🍚', price: 245.00, quantity: 1 },
+                    { name: 'Kangkong', category: 'Vegetables', icon: '�', price: 25.00, quantity: 3 }
                 ]
             },
             {
                 id: 2,
-                storeName: 'Local Store',
+                storeName: 'Puregold',
                 date: 'May 10, 2025',
-                total: 156.20,
+                total: 485.00,
                 items: [
-                    { name: 'Coffee', category: 'Beverages', icon: '☕', price: 6.99, quantity: 2 },
-                    { name: 'Butter', category: 'Dairy', icon: '🧈', price: 4.49, quantity: 1 },
-                    { name: 'Chips', category: 'Snacks', icon: '🥔', price: 2.99, quantity: 3 },
-                    { name: 'OJ 1L', category: 'Beverages', icon: '🧃', price: 3.49, quantity: 2 },
-                    { name: 'Tomato Soup', category: 'Canned Goods', icon: '🥫', price: 1.99, quantity: 4 }
+                    { name: 'Barako Coffee', category: 'Beverages', icon: '☕', price: 145.00, quantity: 2 },
+                    { name: 'Star Margarine', category: 'Dairy', icon: '🧈', price: 48.00, quantity: 1 },
+                    { name: 'Chicharon', category: 'Snacks', icon: '�', price: 55.00, quantity: 3 },
+                    { name: 'Calamansi Juice', category: 'Beverages', icon: '🍋', price: 45.00, quantity: 2 },
+                    { name: 'Sardinas', category: 'Canned Goods', icon: '🥫', price: 28.50, quantity: 4 }
                 ]
             },
             {
                 id: 3,
-                storeName: 'MegaMall',
+                storeName: 'Robinsons Supermarket',
                 date: 'May 1, 2025',
-                total: 892.75,
+                total: 1850.00,
                 items: [
-                    { name: 'Salmon', category: 'Fish & Seafood', icon: '🐟', price: 12.99, quantity: 3 },
-                    { name: 'Sliced Ham', category: 'Deli', icon: '🥓', price: 6.49, quantity: 2 },
-                    { name: 'Olive Oil', category: 'Condiments & Spices', icon: '🫒', price: 8.99, quantity: 1 },
-                    { name: 'Ice Cream', category: 'Frozen Foods', icon: '🍦', price: 5.99, quantity: 4 },
-                    { name: 'Shampoo', category: 'Personal Care', icon: '🧴', price: 4.49, quantity: 3 },
-                    { name: 'Dish Soap', category: 'Household & Cleaning', icon: '🧼', price: 2.99, quantity: 5 },
-                    { name: 'Dog Food', category: 'Pet Care', icon: '🐕', price: 15.99, quantity: 2 },
-                    { name: 'Diapers', category: 'Baby Items', icon: '👶', price: 18.99, quantity: 1 },
-                    { name: 'Flour 2kg', category: 'Baking', icon: '🌾', price: 3.99, quantity: 3 }
+                    { name: 'Bangus (Milkfish)', category: 'Fish & Seafood', icon: '🐟', price: 150.00, quantity: 3 },
+                    { name: 'Longganisa', category: 'Deli', icon: '🌭', price: 120.00, quantity: 2 },
+                    { name: 'Patis (Fish Sauce)', category: 'Condiments & Spices', icon: '�', price: 32.00, quantity: 1 },
+                    { name: 'Ube Ice Cream', category: 'Frozen Foods', icon: '�', price: 120.00, quantity: 4 },
+                    { name: 'Papaya Soap', category: 'Personal Care', icon: '�', price: 28.00, quantity: 3 },
+                    { name: 'Zonrox Bleach', category: 'Household & Cleaning', icon: '�', price: 38.00, quantity: 5 },
+                    { name: 'Pedigree Dog Food', category: 'Pet Care', icon: '🐕', price: 195.00, quantity: 2 },
+                    { name: 'Baby Diapers', category: 'Baby Items', icon: '👶', price: 285.00, quantity: 1 },
+                    { name: 'Harina (Flour) 2kg', category: 'Baking', icon: '🌾', price: 65.00, quantity: 3 }
                 ]
             }
         ];
@@ -3302,11 +3335,12 @@
 
         function updateWelcomeText(viewName) {
             const hour = new Date().getHours();
-            let greeting = 'Good Morning!';
+            const firstName = appState.userData.name.split(' ')[0]; // Get first name
+            let greeting = `Good Morning! ${firstName}`;
             let subtitle = 'Ready to shop smart?';
 
-            if (hour >= 12 && hour < 17) greeting = 'Good Afternoon!';
-            else if (hour >= 17) greeting = 'Good Evening!';
+            if (hour >= 12 && hour < 17) greeting = `Good Afternoon! ${firstName}`;
+            else if (hour >= 17) greeting = `Good Evening! ${firstName}`;
 
             if (viewName === 'history') {
                 if (appState.userData.role === 'admin') {
@@ -3322,7 +3356,7 @@
             }
 
             document.querySelector('.top-header div').innerHTML = `
-                <div class="welcome-text">${greeting}</div>
+                <div class="welcome-text" id="welcome-text">${greeting}</div>
                 <div class="welcome-subtext">${subtitle}</div>
             `;
         }
@@ -3389,7 +3423,7 @@
                     };
                     appState.shoppingList = [];
                     appState.cartList = [];
-                    appState.currentBudget = 500.00;
+                    appState.currentBudget = 1000.00;
                     appState.totalSpent = 0.00;
                     
                     showView('welcome');
@@ -3634,6 +3668,13 @@
 
         function openAddItemModal() {
             document.getElementById('add-item-modal').style.display = 'block';
+            
+            // Show quantity field for admins
+            if (appState.userData.role === 'admin') {
+                document.getElementById('admin-quantity-field').style.display = 'block';
+            } else {
+                document.getElementById('admin-quantity-field').style.display = 'none';
+            }
         }
 
         function closeAddItemModal() {
@@ -3641,6 +3682,7 @@
             document.getElementById('product-name').value = '';
             document.getElementById('product-category').value = 'Fruits';
             document.getElementById('product-price').value = '';
+            document.getElementById('product-quantity').value = '';
             document.getElementById('product-icon').value = '';
             document.getElementById('product-image').value = '';
             document.getElementById('add-image-preview-container').classList.remove('show');
@@ -3725,7 +3767,15 @@
             document.getElementById('edit-product-name').value = item.name;
             document.getElementById('edit-product-category').value = item.category;
             document.getElementById('edit-product-price').value = item.price || '';
+            document.getElementById('edit-product-quantity').value = item.quantity || '';
             document.getElementById('edit-product-icon').value = item.icon || '';
+            
+            // Show quantity field for admins
+            if (appState.userData.role === 'admin') {
+                document.getElementById('edit-admin-quantity-field').style.display = 'block';
+            } else {
+                document.getElementById('edit-admin-quantity-field').style.display = 'none';
+            }
             
             if (item.image) {
                 document.getElementById('edit-image-preview').src = item.image;
@@ -3742,6 +3792,7 @@
             document.getElementById('edit-product-name').value = '';
             document.getElementById('edit-product-category').value = 'Fruits';
             document.getElementById('edit-product-price').value = '';
+            document.getElementById('edit-product-quantity').value = '';
             document.getElementById('edit-product-icon').value = '';
             document.getElementById('edit-product-image').value = '';
             document.getElementById('edit-image-preview-container').classList.remove('show');
@@ -4073,20 +4124,24 @@
             
             for (const [barcode, product] of Object.entries(productDatabase)) {
                 const icon = product.icon || '📦';
+                const quantity = product.quantity || 0;
                 const imageDisplay = product.image 
                     ? `<img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover;">`
                     : `<div style="font-size: 24px;">${icon}</div>`;
                 
                 html += `
-                    <div class="database-item">
-                        <div class="item-image">${imageDisplay}</div>
+                    <div class="database-item" onclick="showDatabaseItemDetails('${barcode}')" style="cursor: pointer;">
+                        <div class="item-image">
+                            ${imageDisplay}
+                            <span class="quantity-badge">${quantity}</span>
+                        </div>
                         <div class="database-item-info">
                             <div class="item-name">${product.name}</div>
                             <div class="item-category">${product.category.toUpperCase()}</div>
                             <div class="barcode-label">Barcode: ${barcode}</div>
                         </div>
                         <div class="item-price">₱${product.price.toFixed(2)}</div>
-                        <div class="item-actions">
+                        <div class="item-actions" onclick="event.stopPropagation();">
                             <div class="action-icon edit-icon" onclick="openEditDatabaseModal('${barcode}')" title="Edit item">✏️</div>
                         </div>
                     </div>
@@ -4295,6 +4350,7 @@
             document.getElementById('db-product-name').value = product.name;
             document.getElementById('db-product-category').value = product.category;
             document.getElementById('db-product-price').value = product.price;
+            document.getElementById('db-product-quantity').value = product.quantity || 0;
             document.getElementById('db-product-icon').value = product.icon || '';
             document.getElementById('db-product-image').value = '';
             
@@ -4319,6 +4375,7 @@
             document.getElementById('db-product-name').value = '';
             document.getElementById('db-product-category').value = 'Fruits';
             document.getElementById('db-product-price').value = '';
+            document.getElementById('db-product-quantity').value = '';
             document.getElementById('db-product-icon').value = '';
             document.getElementById('db-product-image').value = '';
             document.getElementById('db-image-preview-container').classList.remove('show');
@@ -4331,6 +4388,7 @@
             const name = document.getElementById('db-product-name').value.trim();
             const category = document.getElementById('db-product-category').value;
             const price = parseFloat(document.getElementById('db-product-price').value);
+            const quantity = parseInt(document.getElementById('db-product-quantity').value) || 0;
             const icon = document.getElementById('db-product-icon').value.trim();
             const imageFile = document.getElementById('db-product-image').files[0];
 
@@ -4354,6 +4412,7 @@
                             name: name,
                             category: category,
                             price: price,
+                            quantity: quantity,
                             icon: icon || '📦',
                             image: imageData
                         };
@@ -4400,6 +4459,31 @@
                     updateHistoryView();
                 }
             );
+        }
+
+        function showDatabaseItemDetails(barcode) {
+            const product = productDatabase[barcode];
+            if (!product) return;
+
+            const icon = product.icon || '📦';
+            const imageDisplay = product.image 
+                ? `<img src="${product.image}" alt="${product.name}" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;">`
+                : `<div style="font-size: 48px;">${icon}</div>`;
+
+            document.getElementById('details-icon').innerHTML = imageDisplay;
+            document.getElementById('details-name').textContent = product.name;
+            document.getElementById('details-category').textContent = product.category.toUpperCase();
+            document.getElementById('details-price-container').innerHTML = `₱${product.price.toFixed(2)}`;
+            
+            const quantity = product.quantity || 0;
+            const quantityStatus = quantity > 20 ? '✅ In Stock' : quantity > 0 ? '⚠️ Low Stock' : '❌ Out of Stock';
+            document.getElementById('details-type').innerHTML = `
+                <div style="margin-bottom: 10px;"><strong>Barcode:</strong> ${barcode}</div>
+                <div style="margin-bottom: 10px;"><strong>Available Quantity:</strong> ${quantity} units</div>
+                <div><strong>Status:</strong> ${quantityStatus}</div>
+            `;
+
+            document.getElementById('item-details-modal').style.display = 'block';
         }
 
         function toggleStatsView() {
